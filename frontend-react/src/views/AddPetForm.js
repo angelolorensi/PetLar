@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
+import axiosClient from "../axios-client.js";
+import {useNavigate, useParams} from "react-router-dom";
+import {useStateContext} from "../context/ContextProvider";
 
 export default function AddPetForm(){
+    const navigate = useNavigate();
     const [errors, setErrors] = useState(null);
-    const [petData, setPetData] = useState({
+    const {id} = useParams();
+    const [loading, setLoading] = useState(false);
+    const {setNotification} = useStateContext();
+    const [pet, setPet] = useState({
+        id:null,
         name: '',
         species: '',
         sex: '',
@@ -20,47 +28,44 @@ export default function AddPetForm(){
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setPetData((prevData) => ({
+        setPet((prevData) => ({
             ...prevData,
             [name]: type === 'checkbox' ? checked : value,
         }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await fetch('http://localhost:8000/api/pets', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(petData),
-            });
-
-            if (response.ok) {
-                setErrors('Pet adicionado com sucesso');
-            } else {
-                setErrors('Erro ao adicionar o pet');
-            }
-        } catch (error) {
-            setErrors(`Erro na requisição : ${error}`);
-        }
+    const handleSubmit = (ev) => {
+        ev.preventDefault();
+            console.log(pet);
+            // axiosClient.post(`/pet`, pet)
+            //     .then(() => {
+            //         setNotification("Pet adicionado com sucesso!")
+            //         navigate('/');
+            //     })
+            //     .catch(error => {
+            //         handleErrors(error);
+            //     })
     };
 
     return (
         <form id='addPetForm' onSubmit={handleSubmit}>
+            {errors && <div className='alert'>
+                {Object.keys(errors).map(key => (
+                    <p key={key}>{errors[key][0]}</p>
+                ))}
+            </div>}
+
             <div className='container'>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Nome</label>
-                    <input type="text" className="form-control" name="name" value={petData.name}
-                           onChange={handleChange}/>
+                    <input type="text" className="form-control" name="name" value={pet.name} onChange={handleChange} required/>
                     <div id="nameHelp" className="form-text">O nome do seu pet</div>
                 </div>
 
                 <div className='mb-3'>
                     <label htmlFor="species" className="form-label">Espécie</label>
-                    <select className='form-select' name="species" value={petData.species} onChange={handleChange}>
+                    <select className='form-select' name="species" value={pet.species} onChange={handleChange} required>
+                        <option value="">Selecione uma opção</option>
                         <option value="Canino">Canino</option>
                         <option value="Felino">Felino</option>
                     </select>
@@ -69,7 +74,8 @@ export default function AddPetForm(){
 
                 <div className='mb-3'>
                     <label htmlFor="sex" className="form-label">Sexo:</label>
-                    <select className='form-select' name="sex" value={petData.sex} onChange={handleChange}>
+                    <select className='form-select' name="sex" value={pet.sex} onChange={handleChange} required>
+                        <option value="">Selecione uma opção</option>
                         <option value="Fêmea">Fêmea</option>
                         <option value="Macho">Macho</option>
                     </select>
@@ -82,7 +88,7 @@ export default function AddPetForm(){
                     <div className="col-md-3 mb-3">
                         <div className="form-check custom-form-check-label">
                             <input type="checkbox" className="form-check-input" id="neutered" name="neutered"
-                                   checked={petData.neutered} onChange={handleChange}/>
+                                   checked={pet.neutered} onChange={handleChange}/>
                             <label className="form-check-label" htmlFor="neutered">Castrado</label>
                         </div>
                     </div>
@@ -90,7 +96,7 @@ export default function AddPetForm(){
                     <div className="col-md-3 mb-3">
                         <div className="form-check custom-form-check-label">
                             <input type="checkbox" className="form-check-input" id="vaccinated" name="vaccinated"
-                                   checked={petData.vaccinated} onChange={handleChange}/>
+                                   checked={pet.vaccinated} onChange={handleChange}/>
                             <label className="form-check-label" htmlFor="vaccinated">Vacinado</label>
                         </div>
                     </div>
@@ -98,7 +104,7 @@ export default function AddPetForm(){
                     <div className="col-md-3 mb-3">
                         <div className="form-check custom-form-check-label">
                             <input type="checkbox" className="form-check-input" id="dewormed" name="dewormed"
-                                   checked={petData.dewormed} onChange={handleChange}/>
+                                   checked={pet.dewormed} onChange={handleChange}/>
                             <label className="form-check-label" htmlFor="dewormed">Vermifugado</label>
                         </div>
                     </div>
@@ -106,18 +112,18 @@ export default function AddPetForm(){
                     <div className="col-md-3 mb-3">
                         <div className="form-check custom-form-check-label">
                             <input type="checkbox" className="form-check-input" id="special_care" name="special_care"
-                                   checked={petData.special_care} onChange={handleChange}/>
+                                   checked={pet.special_care} onChange={handleChange}/>
                             <label className="form-check-label" htmlFor="special_care">Precisa de cuidados
                                 especiais</label>
                         </div>
                     </div>
                 </div>
 
-
                 <div className='mb-3'>
                     <label htmlFor="temperament" className="form-label">Temperamento:</label>
-                    <select className='form-select' name="temperament" value={petData.temperament}
-                            onChange={handleChange}>
+                    <select className='form-select' name="temperament" value={pet.temperament} onChange={handleChange}
+                            required>
+                        <option value="">Selecione uma opção</option>
                         <option value="Agressivo">Agressivo</option>
                         <option value="Arisco">Arisco</option>
                         <option value="Brincalhão">Brincalhão</option>
@@ -132,8 +138,9 @@ export default function AddPetForm(){
 
                 <div className='mb-3'>
                     <label htmlFor="livingEnviroment" className="form-label"> Ambiente de convívio: </label>
-                    <select className='form-select' name="livingEnviroment" value={petData.living_environment}
-                            onChange={handleChange}>
+                    <select className='form-select' name="livingEnviroment" value={pet.living_environment}
+                            onChange={handleChange} required>
+                        <option value="">Selecione uma opção</option>
                         <option value="Apartamento">Apartamento</option>
                         <option value="Apartamento telado">Apartamento Telado</option>
                         <option value="Casa com quintal fechado">Casa com quintal fechado</option>
@@ -143,8 +150,9 @@ export default function AddPetForm(){
 
                 <div className='mb-3'>
                     <label htmlFor="socializesWith" className="form-label"> Sociável com: </label>
-                    <select className='form-select' name="socializesWith" value={petData.socializes_with}
-                            onChange={handleChange}>
+                    <select className='form-select' name="socializesWith" value={pet.socializes_with}
+                            onChange={handleChange} required>
+                        <option value="">Selecione uma opção</option>
                         <option value="Cachorros">Cachorros</option>
                         <option value="Gatos">Gatos</option>
                         <option value="Crianças">Crianças</option>
@@ -154,17 +162,19 @@ export default function AddPetForm(){
                 </div>
 
                 <div className="form-floating">
-                    <label htmlFor="floatingTextarea">Descrição/Histórico:</label>
-                    <textarea className="form-control" placeholder="História do seu pet" id="history_description" style={{height:'100px'}} name='history_description' value={petData.description} onChange={handleChange}></textarea>
+                      <textarea
+                          className="form-control"
+                          value={pet.description}
+                          onChange={handleChange}
+                          placeholder="História do seu pet"
+                          id="historyDescription"
+                          style={{height: '100px', lineHeight:'1.2em'}}
+                          name="historyDescription"
+                      ></textarea>
+                    <label htmlFor="historyDescription">Descrição/Histórico:</label>
                 </div>
 
                 <div className="text-center">
-                    {errors && <div className='alert'>
-                        {Object.keys(errors).map(key => (
-                            <p key={key}>{errors[key][0]}</p>
-                        ))}
-                    </div>}
-
                     <button className='btn btn-primary my-3' type="submit">Adicionar Pet</button>
                 </div>
             </div>

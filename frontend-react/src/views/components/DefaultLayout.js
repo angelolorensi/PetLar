@@ -1,57 +1,57 @@
-import {Link, Navigate, Outlet} from "react-router-dom";
-import {useStateContext} from "../../context/ContextProvider.js";
-import {useEffect} from "react";
+import { Link, Navigate, Outlet } from "react-router-dom";
+import { useStateContext } from "../../context/ContextProvider.js";
+import { useEffect } from "react";
 import axiosClient from "../../axios-client.js";
 
-export default function DefaultLayout(){
-    const {user, token,notification,setUser, setToken} = useStateContext();
+export default function DefaultLayout() {
+    const { user, token, notification, setUser, setToken } = useStateContext();
 
-    if(!token){
-        return <Navigate to='/login'/>
+    useEffect(() => {
+        axiosClient.get("/user").then(({ data }) => {
+            setUser(data);
+        });
+    }, []);
+
+    if (!token) {
+        return <Navigate to="/login" />;
     }
 
     const onLogout = (ev) => {
-        ev.preventDefault()
+        ev.preventDefault();
 
-        axiosClient.post('/logout')
-            .then(() => {
-                setUser({});
-                setToken(null)
-            })
-    }
+        axiosClient.post("/logout").then(() => {
+            setUser({});
+            setToken(null);
+        });
+    };
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-        axiosClient.get('/user')
-            .then(({data}) => [
-                setUser(data)
-            ])
-    }, []);
 
     return (
-        <div id='defaultLayout'>
+        <div id="defaultLayout">
             <aside>
-                <Link className='fs-2 fw-bold' to='/dashboard'>PetLar 🐶</Link>
-                <Link className='fs-4 fw-bold add-btn' to='/add'>Adicionar Pet</Link>
+                <Link className="fs-2 fw-bold" to="/">
+                    PetLar 🐶
+                </Link>
+                <Link className="fs-4 fw-bold add-btn" to="/add">
+                    Adicionar Pet
+                </Link>
             </aside>
-            <div className='content'>
+            <div className="content">
                 <header>
-                    <div className='fs-3 fw-bold'>
-                        Pets
-                    </div>
+                    <div className="fs-3 fw-bold">Pets</div>
                     <div>
                         {user.name}
-                        <a className='btn-logout' href='#' onClick={onLogout}>Logout</a>
+                        <a className="btn-logout" href="#" onClick={onLogout}>
+                            Logout
+                        </a>
                     </div>
                 </header>
                 <main>
-                    <Outlet/>
+                    <Outlet />
                 </main>
             </div>
 
-            {notification && <div className='notification'>
-                {notification}
-            </div>}
+            {notification && <div className="notification">{notification}</div>}
         </div>
-    )
+    );
 }
