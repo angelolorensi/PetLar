@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {useRef, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.js";
+import undrawDog from '../assets/img/undraw_dog.svg';
 
 export default function Login(){
   const emailRef = useRef();
@@ -39,7 +40,7 @@ export default function Login(){
   return (
     <div className='login-signup-form animated fadeInDown'>
         <div>
-            <img src='../assets/img/undraw_dog.svg'/>
+            <img src={undrawDog} width='300' height='300'/>
         </div>
         <div className='form'>
           <form onSubmit={onSubmit}>
