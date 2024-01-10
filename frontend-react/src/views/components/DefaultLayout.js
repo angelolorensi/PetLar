@@ -31,11 +31,11 @@ export default function DefaultLayout(){
     return (
         <div id='defaultLayout'>
             <aside>
-                <Link to='/dashboard'>PetLar</Link>
+                <Link className='fs-2 fw-bold' to='/dashboard'>PetLar 🐶</Link>
             </aside>
             <div className='content'>
                 <header>
-                    <div className='fs-3'>
+                    <div className='fs-3 fw-bold'>
                         Pets
                     </div>
                     <div>

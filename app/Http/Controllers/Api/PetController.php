@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Pet;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
 use App\Http\Requests\UpdatePetRequest;
+use App\Models\Pet;
+use Illuminate\Http\Request;
 
 class PetController extends Controller
 {
@@ -18,33 +19,26 @@ class PetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePetRequest $request)
+    public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string',
+            'species' => 'required|string',
+            'sex' => 'required|string',
+            // ... outros campos necessários
+        ]);
+
+        $pet = Pet::create($data);
+
+        return response()->json($pet, 201);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(Pet $pet)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pet $pet)
     {
         //
     }
