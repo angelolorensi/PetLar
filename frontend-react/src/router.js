@@ -5,6 +5,7 @@ import NotFound from "./views/NotFound.js";
 import DefaultLayout from "./views/components/DefaultLayout.js";
 import GuestLayout from "./views/components/GuestLayout.js";
 import Home from "./views/Home";
+import AddPetForm from "./views/AddPetForm";
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
             {
                 path: '/home',
                 element: <Home/>
+            },
+            {
+                path: '/add',
+                element: <AddPetForm/>
             }
         ]
     },

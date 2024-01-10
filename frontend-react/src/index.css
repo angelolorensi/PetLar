@@ -141,10 +141,12 @@ table > tbody > tr > td {
 /* Login/Signup forms*/
 
 .login-signup-form {
-    height: 100vh;
+    height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: row;
+    gap: 10em;
 }
 
 .login-signup-form .form {
@@ -177,6 +179,7 @@ table > tbody > tr > td {
 
 /* Login/Signup form */
 
+/* Default layout */
 
 #defaultLayout {
     display: flex;
@@ -218,6 +221,39 @@ table > tbody > tr > td {
 #defaultLayout main {
     padding: 2rem;
 }
+
+#defaultLayout .add-btn{
+    display: block;
+    padding: 0.75rem 1rem;
+    margin-top: 1em;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Default layout */
+
+/* Add pet form */
+
+#addPetForm .form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#addPetForm .custom-form-check-label {
+    display: flex;
+    align-items: center;
+}
+
+#addPetForm .custom-form-check-label input {
+    margin-right: 5px;
+}
+
+/* Add pet form */
 
 .animated {
     -webkit-animation-duration: 0.3s;

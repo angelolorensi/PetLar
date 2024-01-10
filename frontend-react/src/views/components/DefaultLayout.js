@@ -32,6 +32,7 @@ export default function DefaultLayout(){
         <div id='defaultLayout'>
             <aside>
                 <Link className='fs-2 fw-bold' to='/dashboard'>PetLar 🐶</Link>
+                <Link className='fs-4 fw-bold add-btn' to='/add'>Adicionar Pet</Link>
             </aside>
             <div className='content'>
                 <header>
