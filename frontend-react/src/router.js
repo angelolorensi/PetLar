@@ -4,7 +4,7 @@ import Signup from "./views/Signup.js";
 import NotFound from "./views/NotFound.js";
 import DefaultLayout from "./views/components/DefaultLayout.js";
 import GuestLayout from "./views/components/GuestLayout.js";
-import Dashboard from "./views/Dashboard.js";
+import Home from "./views/Home";
 
 const router = createBrowserRouter([
     {
@@ -13,12 +13,12 @@ const router = createBrowserRouter([
         children:[
             {
                 path: '/',
-                element: <Navigate to='/users'/>
+                element: <Navigate to='/home'/>
             },
             {
-                path: '/dashboard',
-                element: <Dashboard/>
-            },
+                path: '/home',
+                element: <Home/>
+            }
         ]
     },
     {
