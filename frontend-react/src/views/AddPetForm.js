@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axiosClient from "../axios-client.js";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useStateContext} from "../context/ContextProvider";
 
 export default function AddPetForm(){
@@ -58,28 +58,49 @@ export default function AddPetForm(){
             <div className='container'>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Nome</label>
-                    <input type="text" className="form-control" name="name" value={pet.name} onChange={handleChange} required/>
-                    <div id="nameHelp" className="form-text">O nome do seu pet</div>
+                    <input type="text" className="form-control" name="name" value={pet.name} onChange={handleChange}
+                           required/>
                 </div>
 
-                <div className='mb-3'>
-                    <label htmlFor="species" className="form-label">Espécie</label>
-                    <select className='form-select' name="species" value={pet.species} onChange={handleChange} required>
-                        <option value="">Selecione uma opção</option>
-                        <option value="Canino">Canino</option>
-                        <option value="Felino">Felino</option>
-                    </select>
-                    <div id="speciesHelp" className="form-text">A espécie do seu pet</div>
-                </div>
+                <div className='row'>
+                    <div className='col-md-3 mb-3'>
+                        <label htmlFor="species" className="form-label">Espécie</label>
+                        <select className='form-select' name="species" value={pet.species} onChange={handleChange}
+                                required>
+                            <option value="">Selecione uma opção</option>
+                            <option value="Canino">Canino</option>
+                            <option value="Felino">Felino</option>
+                        </select>
+                    </div>
 
-                <div className='mb-3'>
-                    <label htmlFor="sex" className="form-label">Sexo:</label>
-                    <select className='form-select' name="sex" value={pet.sex} onChange={handleChange} required>
-                        <option value="">Selecione uma opção</option>
-                        <option value="Fêmea">Fêmea</option>
-                        <option value="Macho">Macho</option>
-                    </select>
-                    <div id="sexHelp" className="form-text">O sexo do seu pet</div>
+                    <div className='col-md-3 mb-3'>
+                        <label htmlFor="size" className="form-label">Porte:</label>
+                        <select className='form-select' name="size" value={pet.size} onChange={handleChange} required>
+                            <option value="">Selecione uma opção</option>
+                            <option value="Pequeno">Pequeno</option>
+                            <option value="Médio">Médio</option>
+                            <option value="Grande">Grande</option>
+                        </select>
+                    </div>
+
+                    <div className='col-md-3 mb-3'>
+                        <label htmlFor="age" className="form-label">Idade:</label>
+                        <select className='form-select' name="age" value={pet.age} onChange={handleChange} required>
+                            <option value="">Selecione uma opção</option>
+                            <option value="Fêmea">Filhote</option>
+                            <option value="Adulto">Adulto</option>
+                            <option value="Idoso">Idoso</option>
+                        </select>
+                    </div>
+
+                    <div className='col-md-3 mb-3'>
+                        <label htmlFor="sex" className="form-label">Sexo:</label>
+                        <select className='form-select' name="sex" value={pet.sex} onChange={handleChange} required>
+                            <option value="">Selecione uma opção</option>
+                            <option value="Fêmea">Fêmea</option>
+                            <option value="Macho">Macho</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div className='form-label'>Cuidados Veterinários:</div>
@@ -137,8 +158,8 @@ export default function AddPetForm(){
                 </div>
 
                 <div className='mb-3'>
-                    <label htmlFor="livingEnviroment" className="form-label"> Ambiente de convívio: </label>
-                    <select className='form-select' name="livingEnviroment" value={pet.living_environment}
+                    <label htmlFor="living_environment" className="form-label"> Ambiente de convívio:  </label>
+                    <select className='form-select' name="living_environment" value={pet.living_environment}
                             onChange={handleChange} required>
                         <option value="">Selecione uma opção</option>
                         <option value="Apartamento">Apartamento</option>
@@ -149,8 +170,8 @@ export default function AddPetForm(){
                 </div>
 
                 <div className='mb-3'>
-                    <label htmlFor="socializesWith" className="form-label"> Sociável com: </label>
-                    <select className='form-select' name="socializesWith" value={pet.socializes_with}
+                    <label htmlFor="socializes_with" className="form-label"> Sociável com: </label>
+                    <select className='form-select' name="socializes_with" value={pet.socializes_with}
                             onChange={handleChange} required>
                         <option value="">Selecione uma opção</option>
                         <option value="Cachorros">Cachorros</option>
@@ -164,18 +185,19 @@ export default function AddPetForm(){
                 <div className="form-floating">
                       <textarea
                           className="form-control"
-                          value={pet.description}
                           onChange={handleChange}
+                          defaultValue={pet.description}
                           placeholder="História do seu pet"
-                          id="historyDescription"
-                          style={{height: '100px', lineHeight:'1.2em'}}
-                          name="historyDescription"
+                          id="description"
+                          style={{height: '100px'}}
+                          name="description"
                       ></textarea>
-                    <label htmlFor="historyDescription">Descrição/Histórico:</label>
+                    <label htmlFor="description">Descrição/Histórico:</label>
                 </div>
 
-                <div className="text-center">
+                <div className="text-center d-flex justify-content-center gap-3">
                     <button className='btn btn-primary my-3' type="submit">Adicionar Pet</button>
+                    <Link className='btn btn-dark my-3' to='/'>Cancelar</Link>
                 </div>
             </div>
         </form>

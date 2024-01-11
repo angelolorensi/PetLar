@@ -38,12 +38,10 @@ export default function DefaultLayout() {
             </aside>
             <div className="content">
                 <header>
-                    <div className="fs-3 fw-bold">Pets</div>
+                    <div className="fs-2 fw-bold">Pets</div>
                     <div>
                         {user.name}
-                        <a className="btn-logout" href="#" onClick={onLogout}>
-                            Logout
-                        </a>
+                        <a className="btn-logout m-2" href="#" onClick={onLogout}>Logout</a>
                     </div>
                 </header>
                 <main>

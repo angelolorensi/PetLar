@@ -42,9 +42,9 @@ input:focus {
 .btn-delete {
     font-family: "Roboto", sans-serif;
     outline: 0;
-    background: #5b08a7;
     border: 0;
     text-decoration: none;
+    background: #5b08a7;
     padding: 15px;
     color: #FFFFFF;
     font-size: 16px;
@@ -71,21 +71,28 @@ input:focus {
     background-color: #b72424;
 }
 
+.btn-dark {
+    background-color: #212121;
+}
+
 .btn-logout {
     text-decoration: none;
     padding: 0.75rem 1.5rem;
-    color: #212121;
+    color: #ffffff;
+    background-color: #7b3bb6;
     transition: all 0.3s;
     border-radius: 6px;
 }
 .btn-logout:hover {
+    color: #000000;
     background-color: rgba(0, 0, 0, 0.1);
 }
 
 .btn:hover,
 .btn:active,
 .btn:focus {
-    background: #5b08a7;
+    background: #7b3bb6;
+    opacity: 90%;
 }
 
 .text-center {
@@ -231,6 +238,10 @@ table > tbody > tr > td {
     text-decoration: none;
     transition: all 0.2s;
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+#defaultLayout .add-btn:hover{
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Default layout */
