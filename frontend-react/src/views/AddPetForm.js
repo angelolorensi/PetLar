@@ -36,15 +36,14 @@ export default function AddPetForm(){
 
     const handleSubmit = (ev) => {
         ev.preventDefault();
-            console.log(pet);
-            // axiosClient.post(`/pet`, pet)
-            //     .then(() => {
-            //         setNotification("Pet adicionado com sucesso!")
-            //         navigate('/');
-            //     })
-            //     .catch(error => {
-            //         handleErrors(error);
-            //     })
+            axiosClient.post(`/pets`, pet)
+                .then(() => {
+                    setNotification("Pet adicionado com sucesso!")
+                    navigate('/');
+                })
+                .catch(error => {
+                    setErrors(error);
+                })
     };
 
     return (

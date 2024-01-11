@@ -21,7 +21,8 @@ Route::middleware('auth:sanctum')->group(function (){
         return $request->user();
     });
 
-    Route::apiResource('pet', PetController::class);
+    Route::apiResource('pets', PetController::class);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
