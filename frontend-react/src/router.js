@@ -4,8 +4,8 @@ import Signup from "./views/Signup.js";
 import NotFound from "./views/NotFound.js";
 import DefaultLayout from "./views/components/DefaultLayout.js";
 import GuestLayout from "./views/components/GuestLayout.js";
-import Home from "./views/Home";
 import AddPetForm from "./views/AddPetForm";
+import PetList from "./views/PetList";
 
 const router = createBrowserRouter([
     {
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/home',
-                element: <Home/>
+                element: <PetList/>
             },
             {
                 path: '/add',
