@@ -36,7 +36,7 @@ export default function Signup(){
       <div className='login-signup-form animated fadeInDown'>
           <div className='form'>
               <form onSubmit={onSubmit}>
-                  <h1 className='title'>Signup for free</h1>
+                  <h1 className='title'>Registre-se de Graça</h1>
                   {errors && <div className='alert'>
                       {Object.keys(errors).map(key => (
                           <p key={key}>{errors[key][0]}</p>
@@ -47,8 +47,8 @@ export default function Signup(){
                   <input ref={emailRef} type='email' placeholder='email adress'/>
                   <input ref={passwordRef} type='password' placeholder='password'/>
                   <input ref={passwordConfirmationRef} type='password' placeholder='password confirmation'/>
-                  <button className='btn btn-block'>Signup</button>
-                  <p className='message'>Already registered <Link to='/login'>Sign in</Link></p>
+                  <button className='btn btn-block'>Registrar</button>
+                  <p className='message'>Ja possui uma conta? <Link to='/login'>Entrar</Link></p>
               </form>
           </div>
           <div>

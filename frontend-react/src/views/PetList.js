@@ -60,7 +60,7 @@ const PetList = () => {
                         <input
                             type="text"
                             className="form-control m-2"
-                            placeholder="Search pets..."
+                            placeholder="Pesquisar pets e suas características..."
                             value={searchQuery}
                             onChange={handleSearchChange}
                         />

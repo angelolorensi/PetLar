@@ -44,7 +44,7 @@ export default function Login(){
         </div>
         <div className='form'>
           <form onSubmit={onSubmit}>
-            <h1 className='title'>Login into your account</h1>
+            <h1 className='title'>Entre com a sua conta</h1>
             {errors && <div className='alert'>
               {Object.keys(errors).map(key => (
                 <p key={key}>{errors[key][0]}</p>
@@ -53,8 +53,8 @@ export default function Login(){
             }
             <input ref={emailRef} type='email' placeholder='email'/>
             <input ref={passwordRef} type='password' placeholder='password'/>
-            <button className='btn btn-block'>Login</button>
-            <p className='message'>Not Registered <Link to='/signup'>Create Account</Link></p>
+            <button className='btn btn-block'>Entrar</button>
+            <p className='message'>Não é cadastrado? <Link to='/signup'>Criar uma conta</Link></p>
           </form>
         </div>
     </div>
