@@ -1,6 +1,6 @@
 // src/components/PetList.js
-import React, { useState, useEffect } from 'react';
-import PetCard from './PetCard';
+import React, { useState, useEffect } from "react";
+import PetCard from "./PetCard";
 import axiosClient from "../axios-client";
 
 const PetList = () => {
@@ -13,23 +13,32 @@ const PetList = () => {
     }, []);
 
     const getPets = () => {
-        setLoading(true)
-        axiosClient.get('/pets')
-            .then(({data}) => {
-                setLoading(false)
-                console.log(data)
+        setLoading(true);
+        axiosClient
+            .get("/pets")
+            .then(({ data }) => {
+                setLoading(false);
                 setPets(data);
             })
             .catch(() => {
-                setLoading(false)
-            })
-    }
+                setLoading(false);
+            });
+    };
 
     return (
         <div className="container">
-            <h1 className="my-4">Available Pets</h1>
             <div className="row">
-                {pets.map((pet) => (
+                <div className="d-flex justify-content-center">
+                    {loading && (
+                        <div class="lds-ring">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    )}
+                </div>
+                {!loading && pets.map((pet) => (
                     <div key={pet.id} className="col-md-4">
                         <PetCard pet={pet} />
                     </div>
