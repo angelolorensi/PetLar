@@ -55,6 +55,26 @@ const PetList = () => {
                     ))}
                 </div>
             )}
+            <div className="col-md-12">
+                    <div className="input-group mb-3">
+                        <input
+                            type="text"
+                            className="form-control m-2"
+                            placeholder="Search pets..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={handleSearchSubmit}
+                            >
+                                Pesquisar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             <div className="pagination justify-content-center">
                 <ul className="pagination">
                     {Array.from(
@@ -78,26 +98,6 @@ const PetList = () => {
                 </ul>
             </div>
             <div className="row">
-            <div className="col-md-12">
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search pets..."
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                        />
-                        <div className="input-group-append">
-                            <button
-                                className="btn btn-outline-secondary"
-                                type="button"
-                                onClick={handleSearchSubmit}
-                            >
-                                Search
-                            </button>
-                        </div>
-                    </div>
-                </div>
                 <div className="d-flex justify-content-center">
                     {loading && (
                         <div className="lds-ring">
