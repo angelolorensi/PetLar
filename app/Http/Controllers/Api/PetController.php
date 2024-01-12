@@ -14,9 +14,17 @@ class PetController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pets = Pet::with('images')->get();
+
+        $query = Pet::with('images');
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%$search%");
+        }
+
+        $pets = $query->paginate(9);
 
         $formattedPets = $pets->map(function ($pet) {
             return [
@@ -40,7 +48,12 @@ class PetController extends Controller
             ];
         });
 
-        return response()->json($formattedPets);
+        return response()->json([
+            'data' => $formattedPets,
+            'current_page' => $pets->currentPage(),
+            'last_page' => $pets->lastPage(),
+            'total' => $pets->total(),
+        ]);
     }
 
     /**

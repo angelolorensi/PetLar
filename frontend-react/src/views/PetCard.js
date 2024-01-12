@@ -20,7 +20,12 @@ const PetCard = ({ pet }) => {
                     {pet.images &&
                         pet.images.map((image, index) => (
                             <div key={index} className={`carousel-item ${index === currentImageIndex ? 'active' : ''}`}>
-                                <img src={`${imageUrl}${image}`} className="d-block w-100"/>
+                                <img
+                                    src={`${imageUrl}${image}`}
+                                    className="d-block w-100"
+                                    style={{ height: '200px', objectFit: 'cover' }}
+                                    alt={`Pet ${pet.name}`}
+                                />
                             </div>
                         ))}
                 </div>
