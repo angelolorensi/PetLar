@@ -372,6 +372,7 @@ export default function AddPetForm() {
                             id="description"
                             style={{ height: "100px" }}
                             name="description"
+                            required
                         ></textarea>
                         <label htmlFor="description">
                             Descrição/Histórico:

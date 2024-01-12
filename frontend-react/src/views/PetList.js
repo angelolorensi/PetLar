@@ -27,6 +27,13 @@ const PetList = () => {
 
     return (
         <div className="container">
+            {errors && (
+                <div className="alert">
+                    {Object.keys(errors).map((key) => (
+                        <p key={key}>{errors[key][0]}</p>
+                    ))}
+                </div>
+            )}
             <div className="row">
                 <div className="d-flex justify-content-center">
                     {loading && (

@@ -49,7 +49,6 @@ class PetController extends Controller
     public function store(StorePetRequest $request)
     {
 
-
         $data = $request->validate([
             'name' => 'required|string',
             'species' => 'required|string|in:Canino,Felino',

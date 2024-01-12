@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 const PetCard = ({ pet }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const imageUrl = `http://localhost:8000/storage/`;
 
     const handlePrevImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? (pet.images ? pet.images.length - 1 : 0) : prevIndex - 1));
@@ -19,7 +20,7 @@ const PetCard = ({ pet }) => {
                     {pet.images &&
                         pet.images.map((image, index) => (
                             <div key={index} className={`carousel-item ${index === currentImageIndex ? 'active' : ''}`}>
-                                <img src={image} className="d-block w-100" alt={pet.name} />
+                                <img src={`${imageUrl}${image}`} className="d-block w-100"/>
                             </div>
                         ))}
                 </div>
