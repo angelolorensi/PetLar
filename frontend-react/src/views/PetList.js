@@ -30,7 +30,7 @@ const PetList = () => {
             <div className="row">
                 <div className="d-flex justify-content-center">
                     {loading && (
-                        <div class="lds-ring">
+                        <div className="lds-ring">
                             <div></div>
                             <div></div>
                             <div></div>
