@@ -29,6 +29,7 @@ class PetResource extends JsonResource
             'living_environment' => $this->living_environment,
             'socializes_with' => $this->socializes_with,
             'description' => $this->description,
+            'images' => $this->images->pluck('image_path'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

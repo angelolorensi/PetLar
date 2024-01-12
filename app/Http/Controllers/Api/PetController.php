@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
 use App\Http\Requests\UpdatePetRequest;
 use App\Models\Pet;
+use App\Models\PetImage;
 use Illuminate\Http\Request;
 
 class PetController extends Controller
@@ -15,14 +16,40 @@ class PetController extends Controller
      */
     public function index()
     {
-        return Pet::all();
+        $pets = Pet::with('images')->get();
+
+        $formattedPets = $pets->map(function ($pet) {
+            return [
+                'id' => $pet->id,
+                'name' => $pet->name,
+                'species' => $pet->species,
+                'sex' => $pet->sex,
+                'size' => $pet->size,
+                'age' => $pet->age,
+                'neutered' => $pet->neutered,
+                'vaccinated' => $pet->vaccinated,
+                'dewormed' => $pet->dewormed,
+                'special_care' => $pet->special_care,
+                'temperament' => $pet->temperament,
+                'living_environment' => $pet->living_environment,
+                'socializes_with' => $pet->socializes_with,
+                'description' => $pet->description,
+                'images' => $pet->images->pluck('image_path'),
+                'created_at' => $pet->created_at,
+                'updated_at' => $pet->updated_at,
+            ];
+        });
+
+        return response()->json($formattedPets);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePetRequest $request)
     {
+
+
         $data = $request->validate([
             'name' => 'required|string',
             'species' => 'required|string|in:Canino,Felino',
@@ -37,9 +64,24 @@ class PetController extends Controller
             'living_environment' => 'required|string|in:Apartamento,Apartamento telado,Casa com quintal fechado',
             'socializes_with' => 'required|string|in:Cachorros,Gatos,Crianças,Pessoas desconhecidas',
             'description' => 'nullable|string',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
         ]);
 
         $pet = Pet::create($data);
+
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $path = $image->storeAs('pet_images', $imageName, 'public');
+                $images[] = $path;
+                PetImage::create([
+                    'pet_id' => $pet->id,
+                    'image_path' => $path,
+                ]);
+            }
+            $pet->images = $images;
+        }
 
         return response()->json($pet, 201);
     }

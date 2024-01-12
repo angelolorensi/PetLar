@@ -24,26 +24,58 @@ export default function AddPetForm(){
         living_environment: '',
         socializes_with: '',
         description: '',
+        images: [],
     });
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setPet((prevData) => ({
-            ...prevData,
-            [name]: type === 'checkbox' ? checked : value,
-        }));
+        const { name, value, type, checked, files } = e.target;
+
+        if (type === 'file') {
+            setPet((prevData) => ({
+                ...prevData,
+                [name]: [...files],
+            }));
+        } else {
+            setPet((prevData) => ({
+                ...prevData,
+                [name]: type === 'checkbox' ? checked : value,
+            }));
+        }
     };
 
     const handleSubmit = (ev) => {
         ev.preventDefault();
-            axiosClient.post(`/pets`, pet)
-                .then(() => {
-                    setNotification("Pet adicionado com sucesso!")
-                    navigate('/');
-                })
-                .catch(error => {
-                    setErrors(error);
-                })
+
+        const formData = new FormData();
+        formData.append('name', pet.name);
+        formData.append('species', pet.species);
+        formData.append('sex', pet.sex);
+        formData.append('size', pet.size);
+        formData.append('age', pet.age);
+        formData.append('neutered', pet.neutered ? 1 : 0);
+        formData.append('vaccinated', pet.vaccinated ? 1 : 0);
+        formData.append('dewormed', pet.dewormed ? 1 : 0);
+        formData.append('special_care', pet.special_care ? 1 : 0);
+        formData.append('temperament', pet.temperament);
+        formData.append('living_environment', pet.living_environment);
+        formData.append('socializes_with', pet.socializes_with);
+        formData.append('description', pet.description);
+
+        pet.images.forEach((image, index) => {
+            formData.append(`images[${index}]`, image);
+        });
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+
+       axiosClient.post(`/pets`, formData)
+            .then(() => {
+                setNotification("Pet adicionado com sucesso!")
+                navigate('/');
+            })
+            .catch(error => {
+                setErrors(error);
+            })
     };
 
     return (
@@ -55,6 +87,19 @@ export default function AddPetForm(){
             </div>}
 
             <div className='container'>
+                <div className='mb-3'>
+                    <label htmlFor="images" className="form-label">Imagem</label>
+                    <input
+                        type="file"
+                        className="form-control"
+                        name="images"
+                        onChange={handleChange}
+                        multiple
+                        accept="image/*"
+                    />
+                    <div id="imagesHelp" className="form-text">Selecione uma ou mais imagens do seu pet</div>
+                </div>
+
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Nome</label>
                     <input type="text" className="form-control" name="name" value={pet.name} onChange={handleChange}
@@ -86,7 +131,7 @@ export default function AddPetForm(){
                         <label htmlFor="age" className="form-label">Idade:</label>
                         <select className='form-select' name="age" value={pet.age} onChange={handleChange} required>
                             <option value="">Selecione uma opção</option>
-                            <option value="Fêmea">Filhote</option>
+                            <option value="Filhote">Filhote</option>
                             <option value="Adulto">Adulto</option>
                             <option value="Idoso">Idoso</option>
                         </select>
@@ -157,7 +202,7 @@ export default function AddPetForm(){
                 </div>
 
                 <div className='mb-3'>
-                    <label htmlFor="living_environment" className="form-label"> Ambiente de convívio:  </label>
+                    <label htmlFor="living_environment" className="form-label"> Ambiente de convívio: </label>
                     <select className='form-select' name="living_environment" value={pet.living_environment}
                             onChange={handleChange} required>
                         <option value="">Selecione uma opção</option>
