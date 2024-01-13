@@ -45,6 +45,7 @@ const PetList = () => {
         setCurrentPage(1);
         getPets();
     };
+    
 
     return (
         <div className="container">

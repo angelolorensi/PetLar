@@ -107,9 +107,29 @@ class PetController extends Controller
      * Display the specified resource.
      */
     public function show(Pet $pet)
-    {
-        //
-    }
+{
+    $formattedPet = [
+        'id' => $pet->id,
+        'name' => $pet->name,
+        'species' => $pet->species,
+        'sex' => $pet->sex,
+        'size' => $pet->size,
+        'age' => $pet->age,
+        'neutered' => $pet->neutered,
+        'vaccinated' => $pet->vaccinated,
+        'dewormed' => $pet->dewormed,
+        'special_care' => $pet->special_care,
+        'temperament' => $pet->temperament,
+        'living_environment' => $pet->living_environment,
+        'socializes_with' => $pet->socializes_with,
+        'description' => $pet->description,
+        'images' => $pet->images->pluck('image_path'),
+        'created_at' => $pet->created_at,
+        'updated_at' => $pet->updated_at,
+    ];
+
+    return response()->json(['data' => $formattedPet]);
+}
 
     /**
      * Update the specified resource in storage.
