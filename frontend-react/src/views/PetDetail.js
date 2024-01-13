@@ -5,7 +5,6 @@ import axiosClient from "../axios-client";
 const PetDetails = () => {
     const { id } = useParams();
     const [pet, setPet] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const imageUrl = `http://localhost:8000/storage/`;
 
@@ -41,11 +40,13 @@ const PetDetails = () => {
 
     if (!pet) {
         return (
-            <div className="lds-ring">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div className="d-flex justify-content-center">
+                <div className="lds-ring">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
         );
     }
@@ -62,17 +63,14 @@ const PetDetails = () => {
                         pet.images.map((image, index) => (
                             <div
                                 key={index}
-                                className={`carousel-item ${
-                                    index === currentImageIndex ? "active" : ""
+                                className={` carousel-item ${
+                                    index === currentImageIndex ? "active pet-detail-image-container" : ""
                                 }`}
                             >
+                                <img className='bleed-blur' src={`${imageUrl}${image}`} alt={`Pet ${pet.name}`}/>
                                 <img
                                     src={`${imageUrl}${image}`}
-                                    className="d-block w-100"
-                                    style={{
-                                        height: "500px",
-                                        objectFit: "cover",
-                                    }}
+                                    className="pet-detail-main-image"
                                     alt={`Pet ${pet.name}`}
                                 />
                             </div>
