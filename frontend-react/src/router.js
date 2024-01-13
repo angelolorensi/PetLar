@@ -6,6 +6,7 @@ import DefaultLayout from "./views/components/DefaultLayout.js";
 import GuestLayout from "./views/components/GuestLayout.js";
 import AddPetForm from "./views/AddPetForm";
 import PetList from "./views/PetList";
+import PetDetail from "./views/PetDetail";
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: '/add',
                 element: <AddPetForm/>
+            },
+            {
+                path:'/pets/:id',
+                element: <PetDetail/>
             }
         ]
     },
