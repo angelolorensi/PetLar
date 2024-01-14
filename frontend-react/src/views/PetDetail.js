@@ -105,7 +105,7 @@ const PetDetails = () => {
             </div>
 
             <div className="mt-4">
-                <h2>{pet.name}</h2>
+                <h2 className="m-2 fw-bold">{pet.name}</h2>
 
                 <div className="row">
                     <div className="col-md-6">

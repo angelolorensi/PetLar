@@ -36,17 +36,20 @@ const PetCard = ({ pet }) => {
                         pet.images.map((image, index) => (
                             <div
                                 key={index}
-                                className={`carousel-item ${
-                                    index === currentImageIndex ? "active" : ""
+                                className={` carousel-item ${
+                                    index === currentImageIndex
+                                        ? "active pet-list-image-container"
+                                        : ""
                                 }`}
                             >
                                 <img
+                                    className="bleed-blur"
                                     src={`${imageUrl}${image}`}
-                                    className="d-block w-100"
-                                    style={{
-                                        height: "200px",
-                                        objectFit: "cover",
-                                    }}
+                                    alt={`Pet ${pet.name}`}
+                                />
+                                <img
+                                    src={`${imageUrl}${image}`}
+                                    className="pet-detail-main-image"
                                     alt={`Pet ${pet.name}`}
                                 />
                             </div>
@@ -87,7 +90,10 @@ const PetCard = ({ pet }) => {
                         : pet.description}
                 </p>
             </Link>
-            <Link to={`/pets/${pet.id}`} className="list-group list-group-flush">
+            <Link
+                to={`/pets/${pet.id}`}
+                className="list-group list-group-flush"
+            >
                 <li className="list-group-item">Espécie: {pet.species}</li>
                 <li className="list-group-item">Sexo: {pet.sex}</li>
                 <li className="list-group-item">Porte: {pet.size}</li>
