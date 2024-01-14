@@ -26,84 +26,78 @@ const PetCard = ({ pet }) => {
 
     return (
         <div className="card m-3">
-            <Link to={`/pets/${pet.id}`}>
-                <div
-                    id={`carousel-${pet.id}`}
-                    className={`carousel ${pet.images ? "slide" : ""}`}
-                    data-bs-ride="carousel"
-                >
-                    <div className="carousel-inner">
-                        {pet.images &&
-                            pet.images.map((image, index) => (
-                                <div
-                                    key={index}
-                                    className={`carousel-item ${
-                                        index === currentImageIndex
-                                            ? "active"
-                                            : ""
-                                    }`}
-                                >
-                                    <img
-                                        src={`${imageUrl}${image}`}
-                                        className="d-block w-100"
-                                        style={{
-                                            height: "200px",
-                                            objectFit: "cover",
-                                        }}
-                                        alt={`Pet ${pet.name}`}
-                                    />
-                                </div>
-                            ))}
-                    </div>
-                    {pet.images && pet.images.length > 1 && (
-                        <>
-                            <button
-                                className="carousel-control-prev"
-                                type="button"
-                                onClick={handlePrevImage}
+            <div
+                id={`carousel-${pet.id}`}
+                className={`carousel ${pet.images ? "slide" : ""}`}
+                data-bs-ride="carousel"
+            >
+                <Link to={`/pets/${pet.id}`} className="carousel-inner">
+                    {pet.images &&
+                        pet.images.map((image, index) => (
+                            <div
+                                key={index}
+                                className={`carousel-item ${
+                                    index === currentImageIndex ? "active" : ""
+                                }`}
                             >
-                                <span
-                                    className="carousel-control-prev-icon"
-                                    aria-hidden="true"
-                                ></span>
-                                <span className="visually-hidden">
-                                    Previous
-                                </span>
-                            </button>
-                            <button
-                                className="carousel-control-next"
-                                type="button"
-                                onClick={handleNextImage}
-                            >
-                                <span
-                                    className="carousel-control-next-icon"
-                                    aria-hidden="true"
-                                ></span>
-                                <span className="visually-hidden">Next</span>
-                            </button>
-                        </>
-                    )}
-                </div>
-                <div className="card-body">
-                    <h5 className="card-title">{pet.name}</h5>
-                    <p className="card-text">
-                        {pet.description.length > 100
-                            ? `${pet.description.substring(0, 100)}...`
-                            : pet.description}
-                    </p>
-                </div>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item">Espécie: {pet.species}</li>
-                    <li className="list-group-item">Sexo: {pet.sex}</li>
-                    <li className="list-group-item">Porte: {pet.size}</li>
-                    <li className="list-group-item">Idade: {pet.age}</li>
-                    <li className="list-group-item">
-                        Temperamento: {pet.temperament}
-                    </li>
-                    <li className="list-group-item">
-                        Sociável com: {pet.socializes_with}
-                    </li>
-                </ul>
+                                <img
+                                    src={`${imageUrl}${image}`}
+                                    className="d-block w-100"
+                                    style={{
+                                        height: "200px",
+                                        objectFit: "cover",
+                                    }}
+                                    alt={`Pet ${pet.name}`}
+                                />
+                            </div>
+                        ))}
+                </Link>
+                {pet.images && pet.images.length > 1 && (
+                    <>
+                        <button
+                            className="carousel-control-prev"
+                            type="button"
+                            onClick={handlePrevImage}
+                        >
+                            <span
+                                className="carousel-control-prev-icon"
+                                aria-hidden="true"
+                            ></span>
+                            <span className="visually-hidden">Previous</span>
+                        </button>
+                        <button
+                            className="carousel-control-next"
+                            type="button"
+                            onClick={handleNextImage}
+                        >
+                            <span
+                                className="carousel-control-next-icon"
+                                aria-hidden="true"
+                            ></span>
+                            <span className="visually-hidden">Next</span>
+                        </button>
+                    </>
+                )}
+            </div>
+            <Link to={`/pets/${pet.id}`} className="card-body">
+                <h5 className="card-title">{pet.name}</h5>
+                <p className="card-text">
+                    {pet.description.length > 100
+                        ? `${pet.description.substring(0, 100)}...`
+                        : pet.description}
+                </p>
+            </Link>
+            <Link to={`/pets/${pet.id}`} className="list-group list-group-flush">
+                <li className="list-group-item">Espécie: {pet.species}</li>
+                <li className="list-group-item">Sexo: {pet.sex}</li>
+                <li className="list-group-item">Porte: {pet.size}</li>
+                <li className="list-group-item">Idade: {pet.age}</li>
+                <li className="list-group-item">
+                    Temperamento: {pet.temperament}
+                </li>
+                <li className="list-group-item">
+                    Sociável com: {pet.socializes_with}
+                </li>
             </Link>
         </div>
     );
