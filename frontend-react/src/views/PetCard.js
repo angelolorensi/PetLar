@@ -31,30 +31,32 @@ const PetCard = ({ pet }) => {
                 className={`carousel ${pet.images ? "slide" : ""}`}
                 data-bs-ride="carousel"
             >
-                <Link to={`/pets/${pet.id}`} className="carousel-inner">
-                    {pet.images &&
-                        pet.images.map((image, index) => (
-                            <div
-                                key={index}
-                                className={` carousel-item ${
-                                    index === currentImageIndex
-                                        ? "active pet-list-image-container"
-                                        : ""
-                                }`}
-                            >
-                                <img
-                                    className="bleed-blur"
-                                    src={`${imageUrl}${image}`}
-                                    alt={`Pet ${pet.name}`}
-                                />
-                                <img
-                                    src={`${imageUrl}${image}`}
-                                    className="pet-detail-main-image"
-                                    alt={`Pet ${pet.name}`}
-                                />
-                            </div>
-                        ))}
-                </Link>
+                <div className="pet-list-image-wrapper">
+                    <Link to={`/pets/${pet.id}`} className="carousel-inner">
+                        {pet.images &&
+                            pet.images.map((image, index) => (
+                                <div
+                                    key={index}
+                                    className={` carousel-item ${
+                                        index === currentImageIndex
+                                            ? "active pet-list-image-container"
+                                            : ""
+                                    }`}
+                                >
+                                    <img
+                                        className="pet-list-bleed-blur"
+                                        src={`${imageUrl}${image}`}
+                                        alt={`Pet ${pet.name}`}
+                                    />
+                                    <img
+                                        src={`${imageUrl}${image}`}
+                                        className="pet-detail-main-image"
+                                        alt={`Pet ${pet.name}`}
+                                    />
+                                </div>
+                            ))}
+                    </Link>
+                </div>
                 {pet.images && pet.images.length > 1 && (
                     <>
                         <button

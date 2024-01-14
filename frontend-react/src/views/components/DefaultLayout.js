@@ -41,7 +41,7 @@ export default function DefaultLayout() {
                     <div className="fs-2 fw-bold">Pets</div>
                     <div>
                         {user.name}
-                        <a className="btn-logout m-2" href="#" onClick={onLogout}>Logout</a>
+                        <a className="btn btn-primary m-2" href="#" onClick={onLogout}>Logout</a>
                     </div>
                 </header>
                 <main>

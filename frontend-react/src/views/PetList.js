@@ -45,7 +45,7 @@ const PetList = () => {
         setCurrentPage(1);
         getPets();
     };
-    
+
 
     return (
         <div className="container">
@@ -57,17 +57,18 @@ const PetList = () => {
                 </div>
             )}
             <div className="col-md-12">
-                    <div className="input-group mb-3">
+                    <div className="input-group mb-2">
                         <input
                             type="text"
                             className="form-control m-2"
+                            style={{height:'40px'}}
                             placeholder="Pesquisar pets e suas características..."
                             value={searchQuery}
                             onChange={handleSearchChange}
                         />
                         <div className="input-group-append">
                             <button
-                                className="btn btn-outline-secondary"
+                                className="btn btn-primary"
                                 type="button"
                                 onClick={handleSearchSubmit}
                             >

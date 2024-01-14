@@ -64,10 +64,16 @@ const PetDetails = () => {
                             <div
                                 key={index}
                                 className={` carousel-item ${
-                                    index === currentImageIndex ? "active pet-detail-image-container" : ""
+                                    index === currentImageIndex
+                                        ? "active pet-detail-image-container"
+                                        : ""
                                 }`}
                             >
-                                <img className='bleed-blur' src={`${imageUrl}${image}`} alt={`Pet ${pet.name}`}/>
+                                <img
+                                    className="bleed-blur"
+                                    src={`${imageUrl}${image}`}
+                                    alt={`Pet ${pet.name}`}
+                                />
                                 <img
                                     src={`${imageUrl}${image}`}
                                     className="pet-detail-main-image"
@@ -136,19 +142,21 @@ const PetDetails = () => {
                         <ul className="list-group">
                             <li className="list-group-item">
                                 <strong>Castrado:</strong>{" "}
-                                {pet.neutered ? "Yes" : "No"}
+                                {pet.neutered ? "Sim" : "Não"}
                             </li>
                             <li className="list-group-item">
                                 <strong>Vacinado:</strong>{" "}
-                                {pet.vaccinated ? "Yes" : "No"}
+                                {pet.vaccinated ? "Sim" : "Não"}
                             </li>
                             <li className="list-group-item">
                                 <strong>Vermifugado:</strong>{" "}
-                                {pet.dewormed ? "Yes" : "No"}
+                                {pet.dewormed ? "Sim" : "Não"}
                             </li>
                             <li className="list-group-item">
-                                <strong>Necessita de cuidados especiais:</strong>{" "}
-                                {pet.special_care ? "Yes" : "No"}
+                                <strong>
+                                    Necessita de cuidados especiais:
+                                </strong>{" "}
+                                {pet.special_care ? "Sim" : "Não"}
                             </li>
                             <li className="list-group-item">
                                 <strong>Ambiente de convívio:</strong>{" "}

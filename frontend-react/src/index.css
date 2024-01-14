@@ -200,7 +200,7 @@ table > tbody > tr > td {
     text-decoration: none;
 }
 
-/* Login/Signup form */
+/* Login/Signup form end */
 
 /* Default layout */
 
@@ -260,7 +260,7 @@ table > tbody > tr > td {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Default layout */
+/* Default layout end */
 
 /* Add pet form */
 
@@ -280,7 +280,9 @@ table > tbody > tr > td {
     margin-right: 5px;
 }
 
-/* Add pet form */
+/* Add pet form end */
+
+/* Animations */
 
 .animated {
     -webkit-animation-duration: 0.3s;
@@ -304,6 +306,10 @@ table > tbody > tr > td {
         transform: translateY(0);
     }
 }
+
+/* Animations end */
+
+/* Loading  */
 
 .lds-ring {
     display: inline-block;
@@ -341,16 +347,37 @@ table > tbody > tr > td {
     }
 }
 
-.pet-list-image-container{
-    position: relative;
+/* Loading end */
 
+/* Pet card  */
+
+.pet-list-image-wrapper {
+    position: relative;
     width: 100%;
     height: 40vh;
+    overflow: hidden;
+    border-radius: 10px;
+}
 
+.pet-list-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.pet-list-bleed-blur {
+    position: absolute;
+    filter: blur(6px);
+    width: 100%;
+    height: 100%;
+}
+
+/* Pet card end */
+
+/* Pet Detail  */
 
 .bleed-blur {
     position: absolute;
@@ -380,3 +407,5 @@ table > tbody > tr > td {
 
     object-fit: contain;
 }
+
+/* Pet Detail end */
