@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../axios-client";
+import { useStateContext } from "../context/ContextProvider";
 
 const PetDetails = () => {
     const { id } = useParams();
     const [pet, setPet] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isUserPetOwner, setIsUserPetOwner] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const { user } = useStateContext();
     const imageUrl = `http://localhost:8000/storage/`;
+    const navigate = useNavigate();
 
     useEffect(() => {
         axiosClient
@@ -14,11 +19,14 @@ const PetDetails = () => {
             .then((data) => {
                 console.log(data.data.data);
                 setPet(data.data.data);
+                setIsUserPetOwner(data.data.data.user_id === user.id);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("Error fetching pet details:", error);
+                setLoading(false);
             });
-    }, [id]);
+    }, [id, user.id]);
 
     const handlePrevImage = () => {
         setCurrentImageIndex((prevIndex) =>
@@ -38,7 +46,29 @@ const PetDetails = () => {
         );
     };
 
-    if (!pet) {
+    const handleEdit = () => {
+        // Navigate to the edit page (replace with the correct route)
+        // For example: navigate(`/edit-pet/${id}`);
+    };
+
+    const handleDelete = () => {
+        const isConfirmed = window.confirm(
+            "Are you sure you want to delete this pet?"
+        );
+
+        if (isConfirmed) {
+            axiosClient
+                .delete(`/pets/${id}`)
+                .then(() => {
+                    navigate("/");
+                })
+                .catch((error) => {
+                    console.error("Error deleting pet:", error);
+                });
+        }
+    };
+
+    if (loading) {
         return (
             <div className="d-flex justify-content-center">
                 <div className="lds-ring">
@@ -52,7 +82,20 @@ const PetDetails = () => {
     }
 
     return (
-        <div className="container mt-4">
+        <div className="container ">
+            {isUserPetOwner && (
+                <div className="d-flex justify-content-end mb-3">
+                    <button
+                        className="btn btn-primary me-2"
+                        onClick={handleEdit}
+                    >
+                        ✏️ Editar
+                    </button>
+                    <button className="btn btn-danger" onClick={handleDelete}>
+                        🗑️Deletar
+                    </button>
+                </div>
+            )}
             <div
                 id={`carousel-${pet.id}`}
                 className={`carousel ${pet.images ? "slide" : ""}`}

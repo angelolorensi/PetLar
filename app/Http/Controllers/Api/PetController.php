@@ -8,6 +8,8 @@ use App\Http\Requests\UpdatePetRequest;
 use App\Models\Pet;
 use App\Models\PetImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PetController extends Controller
 {
@@ -34,6 +36,7 @@ class PetController extends Controller
         $formattedPets = $pets->map(function ($pet) {
             return [
                 'id' => $pet->id,
+                'user_id' => Auth::id(),
                 'name' => $pet->name,
                 'species' => $pet->species,
                 'sex' => $pet->sex,
@@ -66,7 +69,6 @@ class PetController extends Controller
      */
     public function store(StorePetRequest $request)
     {
-
         $data = $request->validate([
             'name' => 'required|string',
             'species' => 'required|string|in:Canino,Felino',
@@ -84,7 +86,7 @@ class PetController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
         ]);
 
-        $pet = Pet::create($data);
+        $pet = auth()->user()->pets()->create($data);
 
         if ($request->hasFile('images')) {
             $images = [];
@@ -107,43 +109,72 @@ class PetController extends Controller
      * Display the specified resource.
      */
     public function show(Pet $pet)
-{
-    $formattedPet = [
-        'id' => $pet->id,
-        'name' => $pet->name,
-        'species' => $pet->species,
-        'sex' => $pet->sex,
-        'size' => $pet->size,
-        'age' => $pet->age,
-        'neutered' => $pet->neutered,
-        'vaccinated' => $pet->vaccinated,
-        'dewormed' => $pet->dewormed,
-        'special_care' => $pet->special_care,
-        'temperament' => $pet->temperament,
-        'living_environment' => $pet->living_environment,
-        'socializes_with' => $pet->socializes_with,
-        'description' => $pet->description,
-        'images' => $pet->images->pluck('image_path'),
-        'created_at' => $pet->created_at,
-        'updated_at' => $pet->updated_at,
-    ];
+    {
+        $formattedPet = [
+            'id' => $pet->id,
+            'user_id' => Auth::id(),
+            'name' => $pet->name,
+            'species' => $pet->species,
+            'sex' => $pet->sex,
+            'size' => $pet->size,
+            'age' => $pet->age,
+            'neutered' => $pet->neutered,
+            'vaccinated' => $pet->vaccinated,
+            'dewormed' => $pet->dewormed,
+            'special_care' => $pet->special_care,
+            'temperament' => $pet->temperament,
+            'living_environment' => $pet->living_environment,
+            'socializes_with' => $pet->socializes_with,
+            'description' => $pet->description,
+            'images' => $pet->images->pluck('image_path'),
+            'created_at' => $pet->created_at,
+            'updated_at' => $pet->updated_at,
+        ];
 
-    return response()->json(['data' => $formattedPet]);
-}
+        return response()->json(['data' => $formattedPet]);
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePetRequest $request, Pet $pet)
     {
-        //
-    }
+        if (auth()->user()->id !== $pet->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
 
+        $data = $request->validate([
+            'name' => 'required|string',
+            'species' => 'required|string|in:Canino,Felino',
+            'sex' => 'required|string|in:Fêmea,Macho',
+            'size' => 'required|string|in:Pequeno,Médio,Grande',
+            'age' => 'required|string|in:Filhote,Adulto,Idoso',
+            'neutered' => 'required|boolean',
+            'vaccinated' => 'required|boolean',
+            'dewormed' => 'required|boolean',
+            'special_care' => 'required|boolean',
+            'temperament' => 'required|string|in:Agressivo,Arisco,Brincalhão,Calmo,Carente,Dócil,Independente,Sociável',
+            'living_environment' => 'required|string|in:Apartamento,Apartamento telado,Casa com quintal fechado',
+            'socializes_with' => 'required|string|in:Cachorros,Gatos,Crianças,Pessoas desconhecidas',
+            'description' => 'nullable|string',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+        ]);
+
+        $pet->update($data);
+
+        return response()->json($pet, 200);
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Pet $pet)
     {
-        //
+        if (auth()->user()->id !== $pet->user_id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $pet->delete();
+
+        return response()->json(['message' => 'Pet deleted successfully'], 200);
     }
 }

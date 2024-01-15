@@ -29,4 +29,9 @@ class Pet extends Model
     {
         return $this->hasMany(PetImage::class);
     }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

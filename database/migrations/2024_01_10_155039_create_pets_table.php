@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->enum('species', ['Canino', 'Felino']);
             $table->enum('sex', ['Fêmea', 'Macho']);

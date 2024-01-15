@@ -21,10 +21,10 @@ Route::middleware('auth:sanctum')->group(function (){
         return $request->user();
     });
 
+    Route::apiResource('pets', PetController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
-    Route::apiResource('pets', PetController::class);
 
 
 Route::post('/signup', [AuthController::class, 'signup']);

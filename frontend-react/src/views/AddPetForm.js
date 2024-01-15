@@ -5,6 +5,7 @@ import { useStateContext } from "../context/ContextProvider";
 
 export default function AddPetForm() {
     const navigate = useNavigate();
+    const { user } = useStateContext();
     const [errors, setErrors] = useState(null);
     const { id } = useParams();
     const [loading, setLoading] = useState(false);
@@ -46,6 +47,7 @@ export default function AddPetForm() {
     const handleSubmit = (ev) => {
         ev.preventDefault();
         setLoading(true);
+        console.log("User ID:", user.id); 
 
         const formData = new FormData();
         formData.append("name", pet.name);
@@ -61,6 +63,7 @@ export default function AddPetForm() {
         formData.append("living_environment", pet.living_environment);
         formData.append("socializes_with", pet.socializes_with);
         formData.append("description", pet.description);
+        formData.append("user_id", user.id);
 
         pet.images.forEach((image, index) => {
             formData.append(`images[${index}]`, image);

@@ -33,7 +33,6 @@ const PetList = () => {
             });
     };
 
-
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -41,11 +40,11 @@ const PetList = () => {
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
+
     const handleSearchSubmit = () => {
         setCurrentPage(1);
         getPets();
     };
-
 
     return (
         <div className="container">
