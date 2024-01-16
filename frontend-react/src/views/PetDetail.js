@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../context/ContextProvider";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDog, faVenusMars, faRuler, faBirthdayCake, faSmile, faUsers, faCheck, faSyringe, faCapsules, faHeartbeat, faHome, faInfo, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const PetDetails = () => {
     const { id } = useParams();
@@ -88,10 +90,10 @@ const PetDetails = () => {
                         className="btn btn-primary me-2"
                         onClick={handleEdit}
                     >
-                        ✏️ Editar
+                        <FontAwesomeIcon icon={faEdit} /> Editar
                     </button>
                     <button className="btn btn-danger" onClick={handleDelete}>
-                        🗑️Deletar
+                        <FontAwesomeIcon icon={faTrash} /> Deletar
                     </button>
                 </div>
             )}
@@ -159,23 +161,22 @@ const PetDetails = () => {
                     <div className="col-md-6">
                         <ul className="list-group">
                             <li className="list-group-item">
-                                <strong>Espécie:</strong> {pet.species}
+                                <FontAwesomeIcon icon={faDog} /> <strong>Espécie:</strong> {pet.species}
                             </li>
                             <li className="list-group-item">
-                                <strong>Sexo:</strong> {pet.sex}
+                                <FontAwesomeIcon icon={faVenusMars} /> <strong>Sexo:</strong> {pet.sex}
                             </li>
                             <li className="list-group-item">
-                                <strong>Porte:</strong> {pet.size}
+                                <FontAwesomeIcon icon={faRuler} /> <strong>Porte:</strong> {pet.size}
                             </li>
                             <li className="list-group-item">
-                                <strong>Idade:</strong> {pet.age}
+                                <FontAwesomeIcon icon={faBirthdayCake} /> <strong>Idade:</strong> {pet.age}
                             </li>
                             <li className="list-group-item">
-                                <strong>Temperamento:</strong> {pet.temperament}
+                                <FontAwesomeIcon icon={faSmile} /> <strong>Temperamento:</strong> {pet.temperament}
                             </li>
                             <li className="list-group-item">
-                                <strong>Sociável com:</strong>{" "}
-                                {pet.socializes_with}
+                                <FontAwesomeIcon icon={faUsers} /> <strong>Sociável com:</strong> {pet.socializes_with}
                             </li>
                         </ul>
                     </div>
@@ -183,35 +184,30 @@ const PetDetails = () => {
                     <div className="col-md-6">
                         <ul className="list-group">
                             <li className="list-group-item">
-                                <strong>Castrado:</strong>{" "}
-                                {pet.neutered ? "Sim" : "Não"}
+                                <FontAwesomeIcon icon={faCheck} /> <strong>Castrado:</strong> {pet.neutered ? "Sim" : "Não"}
                             </li>
                             <li className="list-group-item">
-                                <strong>Vacinado:</strong>{" "}
-                                {pet.vaccinated ? "Sim" : "Não"}
+                                <FontAwesomeIcon icon={faSyringe} /> <strong>Vacinado:</strong> {pet.vaccinated ? "Sim" : "Não"}
                             </li>
                             <li className="list-group-item">
-                                <strong>Vermifugado:</strong>{" "}
-                                {pet.dewormed ? "Sim" : "Não"}
+                                <FontAwesomeIcon icon={faCapsules} /> <strong>Vermifugado:</strong> {pet.dewormed ? "Sim" : "Não"}
                             </li>
                             <li className="list-group-item">
-                                <strong>
-                                    Necessita de cuidados especiais:
-                                </strong>{" "}
-                                {pet.special_care ? "Sim" : "Não"}
+                                <FontAwesomeIcon icon={faHeartbeat} /> <strong>Necessita de cuidados especiais:</strong> {pet.special_care ? "Sim" : "Não"}
                             </li>
                             <li className="list-group-item">
-                                <strong>Ambiente de convívio:</strong>{" "}
-                                {pet.living_environment}
+                                <FontAwesomeIcon icon={faHome} /> <strong>Ambiente de convívio:</strong> {pet.living_environment}
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="mt-4">
-                    <p>
-                        <strong>Descrição:</strong> {pet.description}
-                    </p>
+                    <div className="description-container p-3">
+                        <FontAwesomeIcon icon={faInfo} className="info-icon" />
+                        <strong>Descrição:</strong>
+                        <p className="mt-2">{pet.description}</p>
+                    </div>
                 </div>
             </div>
         </div>

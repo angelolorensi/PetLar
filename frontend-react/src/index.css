@@ -408,4 +408,16 @@ table > tbody > tr > td {
     object-fit: contain;
 }
 
+.description-container {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #ddd; 
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-icon {
+    margin-right: 10px;
+}
+
 /* Pet Detail end */
