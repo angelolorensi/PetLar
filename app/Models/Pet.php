@@ -25,13 +25,23 @@ class Pet extends Model
         'description',
     ];
 
-    public function images()
-    {
-        return $this->hasMany(PetImage::class);
-    }
-    
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function images()
+    {
+        return $this->hasMany(PetImage::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($pet) {
+            $pet->images()->delete();
+        });
+    }
+
 }
