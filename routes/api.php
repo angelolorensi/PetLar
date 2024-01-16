@@ -16,12 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function (){
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
-    Route::apiResource('pets', PetController::class);
+    Route::get('pets', [PetController::class, 'index']);
+    Route::get('pets/{pet}', [PetController::class, 'show']);
+    Route::post('pets', [PetController::class, 'store']);
+    Route::post('pets/{pet}', [PetController::class, 'update']); 
+    Route::delete('pets/{pet}', [PetController::class, 'destroy']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

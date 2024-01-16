@@ -47,8 +47,7 @@ const PetDetails = () => {
     };
 
     const handleEdit = () => {
-        // Navigate to the edit page (replace with the correct route)
-        // For example: navigate(`/edit-pet/${id}`);
+        navigate(`/pets/${id}/edit`);
     };
 
     const handleDelete = () => {

@@ -32,8 +32,8 @@ export default function DefaultLayout() {
                 <Link className="fs-2 fw-bold" to="/">
                     PetLar 🐶
                 </Link>
-                <Link className="fs-4 fw-bold add-btn" to="/add">
-                    Adicionar Pet
+                <Link className="fs-5 fw-bold add-btn" to="/add">
+                    ➕ Adicionar Pet
                 </Link>
             </aside>
             <div className="content">

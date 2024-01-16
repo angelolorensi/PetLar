@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosClient from "../axios-client.js";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStateContext } from "../context/ContextProvider";
 
-export default function AddPetForm() {
+export default function EditPetForm() {
     const navigate = useNavigate();
     const { user } = useStateContext();
     const [errors, setErrors] = useState(null);
@@ -27,6 +27,19 @@ export default function AddPetForm() {
         description: "",
         images: [],
     });
+
+    useEffect(() => {
+        if (id) {
+            axiosClient
+                .get(`/pets/${id}`)
+                .then((data) => {
+                    setPet(data.data.data);
+                })
+                .catch((error) => {
+                    alert("Error fetching pet details:", error);
+                });
+        }
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value, type, checked, files } = e.target;
@@ -65,14 +78,14 @@ export default function AddPetForm() {
         formData.append("user_id", user.id);
 
         pet.images.forEach((image, index) => {
-            formData.append(`images[${index}]`, image);
+            formData.append(`images[]`, image);
         });
 
         axiosClient
-            .post(`/pets`, formData)
+            .post(`/pets/${id}`, formData)
             .then(() => {
                 setLoading(false);
-                setNotification("Pet adicionado com sucesso!");
+                setNotification("Pet atualizado com sucesso!");
                 navigate("/");
             })
             .catch((error) => {
@@ -113,6 +126,7 @@ export default function AddPetForm() {
                             onChange={handleChange}
                             multiple
                             accept="image/*"
+                            required
                         />
                         <div id="imagesHelp" className="form-text">
                             Selecione uma ou mais imagens do seu pet
@@ -383,7 +397,7 @@ export default function AddPetForm() {
 
                     <div className="text-center d-flex justify-content-center gap-3">
                         <button className="btn btn-primary my-3" type="submit">
-                            Adicionar Pet
+                            Editar Pet
                         </button>
                         <Link className="btn btn-dark my-3" to="/">
                             Cancelar

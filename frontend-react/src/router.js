@@ -5,6 +5,7 @@ import NotFound from "./views/NotFound.js";
 import DefaultLayout from "./views/components/DefaultLayout.js";
 import GuestLayout from "./views/components/GuestLayout.js";
 import AddPetForm from "./views/AddPetForm";
+import EditPetForm from "./views/EditPetForm";
 import PetList from "./views/PetList";
 import PetDetail from "./views/PetDetail";
 
@@ -26,9 +27,13 @@ const router = createBrowserRouter([
                 element: <AddPetForm/>
             },
             {
+                path: '/pets/:id/edit',
+                element: <EditPetForm />
+            },
+            {
                 path:'/pets/:id',
                 element: <PetDetail/>
-            }
+            },
         ]
     },
     {

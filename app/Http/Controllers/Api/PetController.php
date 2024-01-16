@@ -64,46 +64,6 @@ class PetController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePetRequest $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'species' => 'required|string|in:Canino,Felino',
-            'sex' => 'required|string|in:Fêmea,Macho',
-            'size' => 'required|string|in:Pequeno,Médio,Grande',
-            'age' => 'required|string|in:Filhote,Adulto,Idoso',
-            'neutered' => 'required|boolean',
-            'vaccinated' => 'required|boolean',
-            'dewormed' => 'required|boolean',
-            'special_care' => 'required|boolean',
-            'temperament' => 'required|string|in:Agressivo,Arisco,Brincalhão,Calmo,Carente,Dócil,Independente,Sociável',
-            'living_environment' => 'required|string|in:Apartamento,Apartamento telado,Casa com quintal fechado',
-            'socializes_with' => 'required|string|in:Cachorros,Gatos,Crianças,Pessoas desconhecidas',
-            'description' => 'nullable|string',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
-        ]);
-
-        $pet = auth()->user()->pets()->create($data);
-
-        if ($request->hasFile('images')) {
-            $images = [];
-            foreach ($request->file('images') as $image) {
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                $path = $image->storeAs('pet_images', $imageName, 'public');
-                $images[] = $path;
-                PetImage::create([
-                    'pet_id' => $pet->id,
-                    'image_path' => $path,
-                ]);
-            }
-            $pet->images = $images;
-        }
-
-        return response()->json($pet, 201);
-    }
 
     /**
      * Display the specified resource.
@@ -135,35 +95,56 @@ class PetController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StorePetRequest $request)
+    {
+        $pet = auth()->user()->pets()->create($request->validated());
+
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $path = $image->storeAs('pet_images', $imageName, 'public');
+                $images[] = $path;
+                PetImage::create([
+                    'pet_id' => $pet->id,
+                    'image_path' => $path,
+                ]);
+            }
+            $pet->images = $images;
+        }
+
+        return response()->json($pet, 201);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePetRequest $request, Pet $pet)
     {
-        if (auth()->user()->id !== $pet->user_id) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+        $pet->update($request->validated());
+        $pet->images()->delete();
+
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $path = $image->storeAs('pet_images', $imageName, 'public');
+                $images[] = $path;
+                PetImage::create([
+                    'pet_id' => $pet->id,
+                    'image_path' => $path,
+                ]);
+            }
+            $pet->images = $images;
         }
 
-        $data = $request->validate([
-            'name' => 'required|string',
-            'species' => 'required|string|in:Canino,Felino',
-            'sex' => 'required|string|in:Fêmea,Macho',
-            'size' => 'required|string|in:Pequeno,Médio,Grande',
-            'age' => 'required|string|in:Filhote,Adulto,Idoso',
-            'neutered' => 'required|boolean',
-            'vaccinated' => 'required|boolean',
-            'dewormed' => 'required|boolean',
-            'special_care' => 'required|boolean',
-            'temperament' => 'required|string|in:Agressivo,Arisco,Brincalhão,Calmo,Carente,Dócil,Independente,Sociável',
-            'living_environment' => 'required|string|in:Apartamento,Apartamento telado,Casa com quintal fechado',
-            'socializes_with' => 'required|string|in:Cachorros,Gatos,Crianças,Pessoas desconhecidas',
-            'description' => 'nullable|string',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
-        ]);
-
-        $pet->update($data);
+        $pet = Pet::with('images')->find($pet->id);
 
         return response()->json($pet, 200);
     }
+
     /**
      * Remove the specified resource from storage.
      */
