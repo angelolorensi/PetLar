@@ -1,8 +1,9 @@
 import {Link} from "react-router-dom";
 import {useRef, useState} from "react";
-import axiosClient from "../axios-client.js";
-import {useStateContext} from "../context/ContextProvider.js";
-import undrawDog from '../assets/img/undraw_dog.svg';
+import axiosClient from "../../axios-client.js";
+import {useStateContext} from "../../context/ContextProvider.js";
+import undrawDog from '../../assets/img/undraw_dog.svg'
+import './auth.css';
 
 export default function Login(){
   const emailRef = useRef();

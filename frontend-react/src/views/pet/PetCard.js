@@ -1,6 +1,7 @@
 // src/components/PetCard.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import './pet.css';
 
 const PetCard = ({ pet }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);

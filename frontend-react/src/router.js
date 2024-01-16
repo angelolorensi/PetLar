@@ -1,13 +1,13 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
-import Login from "./views/Login.js";
-import Signup from "./views/Signup.js";
-import NotFound from "./views/NotFound.js";
-import DefaultLayout from "./views/components/DefaultLayout.js";
-import GuestLayout from "./views/components/GuestLayout.js";
-import AddPetForm from "./views/AddPetForm";
-import EditPetForm from "./views/EditPetForm";
-import PetList from "./views/PetList";
-import PetDetail from "./views/PetDetail";
+import Login from "./views/auth/Login.js";
+import Signup from "./views/auth/Signup.js";
+import NotFound from "./views/shared/NotFound.js";
+import DefaultLayout from "./views/layouts/DefaultLayout.js";
+import GuestLayout from "./views/layouts/GuestLayout.js";
+import AddPetForm from "./views/pet/forms/AddPetForm";
+import EditPetForm from "./views/pet/forms/EditPetForm";
+import PetList from "./views/pet/PetList";
+import PetDetail from "./views/pet/PetDetail";
 
 const router = createBrowserRouter([
     {

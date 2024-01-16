@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axiosClient from "../axios-client";
-import { useStateContext } from "../context/ContextProvider";
+import axiosClient from "../../axios-client";
+import { useStateContext } from "../../context/ContextProvider";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDog, faVenusMars, faRuler, faBirthdayCake, faSmile, faUsers, faCheck, faSyringe, faCapsules, faHeartbeat, faHome, faInfo, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import './pet.css';
+import Loading from "../shared/Loading";
 
 const PetDetails = () => {
     const { id } = useParams();
@@ -72,12 +74,7 @@ const PetDetails = () => {
     if (loading) {
         return (
             <div className="d-flex justify-content-center">
-                <div className="lds-ring">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
+                <Loading/>
             </div>
         );
     }

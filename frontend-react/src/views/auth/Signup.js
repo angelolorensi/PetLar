@@ -1,8 +1,8 @@
 import {Link} from "react-router-dom";
 import {useRef, useState} from "react";
-import axiosClient from "../axios-client.js";
-import {useStateContext} from "../context/ContextProvider.js";
-import undrawCat from "../assets/img/undraw_cat.svg";
+import axiosClient from "../../axios-client.js";
+import {useStateContext} from "../../context/ContextProvider.js";
+import undrawCat from '../../assets/img/undraw_cat.svg';
 
 export default function Signup(){
   const nameRef = useRef();

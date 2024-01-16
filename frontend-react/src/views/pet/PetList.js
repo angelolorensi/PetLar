@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PetCard from "./PetCard";
-import axiosClient from "../axios-client";
+import axiosClient from "../../axios-client";
+import './pet.css';
+import Loading from "../shared/Loading";
 
 const PetList = () => {
     const [pets, setPets] = useState([]);
@@ -101,12 +103,7 @@ const PetList = () => {
             <div className="row">
                 <div className="d-flex justify-content-center">
                     {loading && (
-                        <div className="lds-ring">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
+                        <Loading/>
                     )}
                 </div>
                 {!loading &&
