@@ -9,7 +9,6 @@ use App\Models\Pet;
 use App\Models\PetImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class PetController extends Controller
 {
@@ -158,4 +157,6 @@ class PetController extends Controller
 
         return response()->json(['message' => 'Pet deleted successfully'], 200);
     }
+
+
 }
