@@ -57,3 +57,17 @@
 }
 
 /* Default layout end */
+
+/* Footer */
+
+.footer-line {
+    border-top: 1px solid #5b08a7;
+}
+
+.icon{
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+/* Footer end */

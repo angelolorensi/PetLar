@@ -3,6 +3,7 @@ import { useStateContext } from "../../context/ContextProvider.js";
 import { useEffect } from "react";
 import axiosClient from "../../axios-client.js";
 import './layouts.css';
+import Footer from "./Footer.js";
 
 export default function DefaultLayout() {
     const { user, token, notification, setUser, setToken } = useStateContext();
@@ -28,29 +29,33 @@ export default function DefaultLayout() {
 
 
     return (
-        <div id="defaultLayout">
-            <aside>
-                <Link className="fs-2 fw-bold" to="/">
-                    PetLar 🐶
-                </Link>
-                <Link className="fs-5 fw-bold add-btn" to="/add">
-                    ➕ Adicionar Pet
-                </Link>
-            </aside>
-            <div className="content">
-                <header>
-                    <div className="fs-2 fw-bold">Pets</div>
-                    <div>
-                        {user.name}
-                        <a className="btn btn-primary m-2" href="#" onClick={onLogout}>↪️Logout</a>
-                    </div>
-                </header>
-                <main>
-                    <Outlet />
-                </main>
-            </div>
+        <div>
+            <div id="defaultLayout">
+                <aside>
+                    <Link className="fs-2 fw-bold" to="/">
+                        PetLar 🐶
+                    </Link>
+                    <Link className="fs-5 fw-bold add-btn" to="/add">
+                        ➕ Adicionar Pet
+                    </Link>
+                </aside>
+                <div className="content">
+                    <header>
+                        <div className="fs-2 fw-bold">Pets</div>
+                        <div>
+                            {user.name}
+                            <a className="btn btn-primary m-2" href="#" onClick={onLogout}>↪️Logout</a>
+                        </div>
+                    </header>
+                    <main>
+                        <Outlet />
+                    </main>
+                </div>
 
-            {notification && <div className="notification">{notification}</div>}
+                {notification && <div className="notification">{notification}</div>}
+
+            </div>
+            <Footer/>
         </div>
     );
 }
