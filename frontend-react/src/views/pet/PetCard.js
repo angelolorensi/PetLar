@@ -1,7 +1,9 @@
 // src/components/PetCard.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import './pet.css';
+import "./pet.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaw, faVenusMars, faRuler, faClock, faSmile, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 const PetCard = ({ pet }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -93,19 +95,30 @@ const PetCard = ({ pet }) => {
                         : pet.description}
                 </p>
             </Link>
+
             <Link
                 to={`/pets/${pet.id}`}
                 className="list-group list-group-flush"
             >
-                <li className="list-group-item">Espécie: {pet.species}</li>
-                <li className="list-group-item">Sexo: {pet.sex}</li>
-                <li className="list-group-item">Porte: {pet.size}</li>
-                <li className="list-group-item">Idade: {pet.age}</li>
                 <li className="list-group-item">
-                    Temperamento: {pet.temperament}
+                    <FontAwesomeIcon icon={faPaw} /> Espécie: {pet.species}
                 </li>
                 <li className="list-group-item">
-                    Sociável com: {pet.socializes_with}
+                    <FontAwesomeIcon icon={faVenusMars} /> Sexo: {pet.sex}
+                </li>
+                <li className="list-group-item">
+                    <FontAwesomeIcon icon={faRuler} /> Porte: {pet.size}
+                </li>
+                <li className="list-group-item">
+                    <FontAwesomeIcon icon={faClock} /> Idade: {pet.age}
+                </li>
+                <li className="list-group-item">
+                    <FontAwesomeIcon icon={faSmile} /> Temperamento:{" "}
+                    {pet.temperament}
+                </li>
+                <li className="list-group-item">
+                    <FontAwesomeIcon icon={faUsers} /> Sociável com:{" "}
+                    {pet.socializes_with}
                 </li>
             </Link>
         </div>
