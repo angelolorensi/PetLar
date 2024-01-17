@@ -22,12 +22,12 @@ class PetController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where('name', 'like', "%$search%");
-            $query->orWhere('living_environment', 'like', "%$search%");
-            $query->orWhere('species', 'like', "%$search%");
-            $query->orWhere('temperament', 'like', "%$search%");
-            $query->orWhere('size', 'like', "%$search%");
-            $query->orWhere('age', 'like', "%$search%");
+            $query->where('name', 'ilike', "%$search%");
+            $query->orWhere('living_environment', 'ilike', "%$search%");
+            $query->orWhere('species', 'ilike', "%$search%");
+            $query->orWhere('temperament', 'ilike', "%$search%");
+            $query->orWhere('size', 'ilike', "%$search%");
+            $query->orWhere('age', 'ilike', "%$search%");
         }
 
         $pets = $query->paginate(9);
