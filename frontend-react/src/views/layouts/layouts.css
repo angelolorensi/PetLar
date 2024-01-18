@@ -71,3 +71,23 @@
 }
 
 /* Footer end */
+
+@media (max-width: 412px) {
+    #defaultLayout {
+        flex-direction: column;
+    }
+
+    #defaultLayout aside {
+        width: 100%;
+    }
+
+    #defaultLayout header {
+        padding: 5px;
+        padding-left: 25px;
+    }
+
+    #defaultLayout main {
+        padding: 0;
+        padding-top: 1em;
+    }
+}

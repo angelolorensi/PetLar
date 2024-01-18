@@ -65,3 +65,10 @@
 }
 
 /* Animations end */
+
+@media (max-width: 768px) {
+    .login-signup-form {
+        flex-direction: column;
+        gap: 0;
+    }
+}
