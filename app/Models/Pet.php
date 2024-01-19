@@ -11,23 +11,58 @@ class Pet extends Model
 
     protected $fillable = [
         'name',
-        'specie',
-        'sex',
-        'size',
-        'age',
+        'specie_id',
+        'sex_id',
+        'size_id',
+        'age_id',
         'neutered',
         'vaccinated',
         'dewormed',
         'special_care',
-        'temperament',
-        'living_environment',
-        'socializes_with',
+        'temperament_id',
+        'living_environment_id',
+        'socializes_with_id',
         'description',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function specie()
+    {
+        return $this->belongsTo(Specie::class, 'specie_id');
+    }
+
+    public function sex()
+    {
+        return $this->belongsTo(Sex::class, 'sex_id');
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class, 'size_id');
+    }
+
+    public function age()
+    {
+        return $this->belongsTo(Age::class, 'age_id');
+    }
+
+    public function temperament()
+    {
+        return $this->belongsTo(Temperament::class, 'temperament_id');
+    }
+
+    public function livingEnvironment()
+    {
+        return $this->belongsTo(LivingEnvironment::class, 'living_environment_id');
+    }
+
+    public function socializesWith()
+    {
+        return $this->belongsTo(SocializesWith::class, 'socializes_with_id');
     }
 
     public function images()
@@ -45,3 +80,4 @@ class Pet extends Model
     }
 
 }
+
