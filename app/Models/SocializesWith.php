@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SocializesWith extends Model
 {
+    protected $table = 'socializes_with';
+    protected $primaryKey = 'socializes_with_id';
     protected $fillable = ['name'];
 
     public function pets()

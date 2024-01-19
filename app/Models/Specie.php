@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Specie extends Model
 {
+    protected $table = 'specie';
+    protected $primaryKey = 'specie_id';
     protected $fillable = ['name'];
 
     public function pets()
