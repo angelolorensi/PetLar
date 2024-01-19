@@ -12,7 +12,7 @@ class SexSeeder extends Seeder
         $genders = ['Fêmea', 'Macho'];
 
         foreach ($genders as $gender) {
-            DB::table('gender')->insert(['name' => $gender]);
+            DB::table('sex')->insert(['name' => $gender]);
         }
     }
 }

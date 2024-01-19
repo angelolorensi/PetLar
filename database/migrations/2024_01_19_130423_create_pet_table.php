@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pet', function (Blueprint $table) {
-            $table->id('pet_id');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->bigIncrements('pet_id');
+            $table->foreignId('user_id')->constrained('user', 'user_id')->onDelete('cascade');
             $table->string('name');
-            $table->foreignId('specie_id')->constrained('specie','species_id');
+            $table->foreignId('specie_id')->constrained('specie','specie_id');
             $table->foreignId('sex_id')->constrained('sex','sex_id');
             $table->foreignId('size_id')->constrained('size', 'size_id');
             $table->foreignId('age_id')->constrained('age','age_id');
