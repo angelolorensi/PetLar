@@ -11,7 +11,7 @@ class Pet extends Model
 
     protected $fillable = [
         'name',
-        'species',
+        'specie',
         'sex',
         'size',
         'age',
@@ -29,10 +29,10 @@ class Pet extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function images()
     {
-        return $this->hasMany(PetImage::class);
+        return $this->hasMany(Image::class);
     }
 
     protected static function boot()

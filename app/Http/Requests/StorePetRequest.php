@@ -15,7 +15,7 @@ class StorePetRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'species' => 'required|string|in:Canino,Felino',
+            'specie' => 'required|string|in:Canino,Felino',
             'sex' => 'required|string|in:Fêmea,Macho',
             'size' => 'required|string|in:Pequeno,Médio,Grande',
             'age' => 'required|string|in:Filhote,Adulto,Idoso',

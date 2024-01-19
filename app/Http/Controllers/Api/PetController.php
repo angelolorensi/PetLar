@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
 use App\Http\Requests\UpdatePetRequest;
 use App\Models\Pet;
-use App\Models\PetImage;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +24,7 @@ class PetController extends Controller
             $search = $request->input('search');
             $query->where('name', 'ilike', "%$search%");
             $query->orWhere('living_environment', 'ilike', "%$search%");
-            $query->orWhere('species', 'ilike', "%$search%");
+            $query->orWhere('specie', 'ilike', "%$search%");
             $query->orWhere('temperament', 'ilike', "%$search%");
             $query->orWhere('size', 'ilike', "%$search%");
             $query->orWhere('age', 'ilike', "%$search%");
@@ -37,7 +37,7 @@ class PetController extends Controller
                 'id' => $pet->id,
                 'user_id' => Auth::id(),
                 'name' => $pet->name,
-                'species' => $pet->species,
+                'specie' => $pet->specie,
                 'sex' => $pet->sex,
                 'size' => $pet->size,
                 'age' => $pet->age,
@@ -73,7 +73,7 @@ class PetController extends Controller
             'id' => $pet->id,
             'user_id' => Auth::id(),
             'name' => $pet->name,
-            'species' => $pet->species,
+            'specie' => $pet->specie,
             'sex' => $pet->sex,
             'size' => $pet->size,
             'age' => $pet->age,
@@ -106,7 +106,7 @@ class PetController extends Controller
                 $imageName = time() . '_' . $image->getClientOriginalName();
                 $path = $image->storeAs('pet_images', $imageName, 'public');
                 $images[] = $path;
-                PetImage::create([
+                Image::create([
                     'pet_id' => $pet->id,
                     'image_path' => $path,
                 ]);
@@ -131,7 +131,7 @@ class PetController extends Controller
                 $imageName = time() . '_' . $image->getClientOriginalName();
                 $path = $image->storeAs('pet_images', $imageName, 'public');
                 $images[] = $path;
-                PetImage::create([
+                Image::create([
                     'pet_id' => $pet->id,
                     'image_path' => $path,
                 ]);
