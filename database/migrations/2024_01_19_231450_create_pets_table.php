@@ -12,20 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pets', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('pet_id');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->enum('species', ['Canino', 'Felino']);
-            $table->enum('sex', ['Fêmea', 'Macho']);
-            $table->enum('size', ['Pequeno', 'Médio', 'Grande']);
-            $table->enum('age', ['Filhote', 'Adulto', 'Idoso']);
+            $table->text('name');
+            $table->foreignId('species_id')->constrained('species', 'specie_id');
+            $table->foreignId('sex_id')->constrained('sexes', 'sex_id');
+            $table->foreignId('size_id')->constrained('sizes','size_id');
+            $table->foreignId('age_id')->constrained('ages','age_id');
             $table->boolean('neutered')->default(false);
             $table->boolean('vaccinated')->default(false);
             $table->boolean('dewormed')->default(false);
             $table->boolean('special_care')->default(false);
-            $table->enum('temperament', ['Agressivo', 'Arisco', 'Brincalhão', 'Calmo', 'Carente', 'Dócil', 'Independente', 'Sociável']);
-            $table->enum('living_environment', ['Apartamento', 'Apartamento telado', 'Casa com quintal fechado']);
-            $table->enum('socializes_with', ['Cachorros', 'Gatos', 'Crianças', 'Pessoas desconhecidas']);
+            $table->foreignId('temperament_id')->constrained('temperaments','temperament_id');
+            $table->foreignId('living_environment_id')->constrained('living_environments','living_environment_id');
+            $table->foreignId('socializes_with_id')->constrained('socializes_with','socializes_with_id');
             $table->text('description')->nullable();
             $table->timestamps();
         });
@@ -34,7 +34,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('pets');
     }

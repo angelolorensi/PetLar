@@ -9,19 +9,15 @@ class Pet extends Model
 {
     use HasFactory;
 
+    protected $table = 'pets';
+    protected $primaryKey = 'pet_id';
+
     protected $fillable = [
         'name',
-        'species',
-        'sex',
-        'size',
-        'age',
         'neutered',
         'vaccinated',
         'dewormed',
         'special_care',
-        'temperament',
-        'living_environment',
-        'socializes_with',
         'description',
     ];
 
@@ -29,10 +25,45 @@ class Pet extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function images()
     {
-        return $this->hasMany(PetImage::class);
+        return $this->hasMany(Image::class, 'pet_id');
+    }
+
+    public function species()
+    {
+        return $this->belongsTo(Species::class, 'species_id', 'specie_id');
+    }
+
+    public function sex()
+    {
+        return $this->belongsTo(Sex::class, 'sex_id', 'sex_id');
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class, 'size_id', 'size_id');
+    }
+
+    public function age()
+    {
+        return $this->belongsTo(Age::class, 'age_id', 'age_id');
+    }
+
+    public function temperament()
+    {
+        return $this->belongsTo(Temperament::class, 'temperament_id', 'temperament_id');
+    }
+
+    public function livingEnvironment()
+    {
+        return $this->belongsTo(LivingEnvironment::class, 'living_environment_id', 'living_environment_id');
+    }
+
+    public function socializesWith()
+    {
+        return $this->belongsTo(SocializesWith::class, 'socializes_with_id', 'socializes_with_id');
     }
 
     protected static function boot()
@@ -43,5 +74,4 @@ class Pet extends Model
             $pet->images()->delete();
         });
     }
-
 }

@@ -5,8 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePetRequest;
 use App\Http\Requests\UpdatePetRequest;
+use App\Http\Resources\PetResource;
+use App\Models\Age;
+use App\Models\Image;
+use App\Models\LivingEnvironment;
 use App\Models\Pet;
-use App\Models\PetImage;
+use App\Models\Sex;
+use App\Models\Size;
+use App\Models\SocializesWith;
+use App\Models\Species;
+use App\Models\Temperament;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,38 +30,28 @@ class PetController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where('name', 'ilike', "%$search%");
-            $query->orWhere('living_environment', 'ilike', "%$search%");
-            $query->orWhere('species', 'ilike', "%$search%");
-            $query->orWhere('temperament', 'ilike', "%$search%");
-            $query->orWhere('size', 'ilike', "%$search%");
-            $query->orWhere('age', 'ilike', "%$search%");
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'ilike', "%$search%")
+                    ->orWhere('living_environment_id', 'ilike', "%$search%")
+                    ->orWhereHas('species', function ($q) use ($search) {
+                        $q->where('name', 'ilike', "%$search%");
+                    })
+                    ->orWhereHas('temperament', function ($q) use ($search) {
+                        $q->where('name', 'ilike', "%$search%");
+                    })
+                    ->orWhereHas('size', function ($q) use ($search) {
+                        $q->where('name', 'ilike', "%$search%");
+                    })
+                    ->orWhereHas('age', function ($q) use ($search) {
+                        $q->where('name', 'ilike', "%$search%");
+                    });
+            });
         }
 
         $pets = $query->paginate(9);
 
-        $formattedPets = $pets->map(function ($pet) {
-            return [
-                'id' => $pet->id,
-                'user_id' => Auth::id(),
-                'name' => $pet->name,
-                'species' => $pet->species,
-                'sex' => $pet->sex,
-                'size' => $pet->size,
-                'age' => $pet->age,
-                'neutered' => $pet->neutered,
-                'vaccinated' => $pet->vaccinated,
-                'dewormed' => $pet->dewormed,
-                'special_care' => $pet->special_care,
-                'temperament' => $pet->temperament,
-                'living_environment' => $pet->living_environment,
-                'socializes_with' => $pet->socializes_with,
-                'description' => $pet->description,
-                'images' => $pet->images->pluck('image_path'),
-                'created_at' => $pet->created_at,
-                'updated_at' => $pet->updated_at,
-            ];
-        });
+        $formattedPets = PetResource::collection($pets);
 
         return response()->json([
             'data' => $formattedPets,
@@ -69,26 +67,7 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
-        $formattedPet = [
-            'id' => $pet->id,
-            'user_id' => Auth::id(),
-            'name' => $pet->name,
-            'species' => $pet->species,
-            'sex' => $pet->sex,
-            'size' => $pet->size,
-            'age' => $pet->age,
-            'neutered' => $pet->neutered,
-            'vaccinated' => $pet->vaccinated,
-            'dewormed' => $pet->dewormed,
-            'special_care' => $pet->special_care,
-            'temperament' => $pet->temperament,
-            'living_environment' => $pet->living_environment,
-            'socializes_with' => $pet->socializes_with,
-            'description' => $pet->description,
-            'images' => $pet->images->pluck('image_path'),
-            'created_at' => $pet->created_at,
-            'updated_at' => $pet->updated_at,
-        ];
+        $formattedPet = new PetResource($pet);
 
         return response()->json(['data' => $formattedPet]);
     }
@@ -98,7 +77,33 @@ class PetController extends Controller
      */
     public function store(StorePetRequest $request)
     {
-        $pet = auth()->user()->pets()->create($request->validated());
+        $species = Species::firstOrCreate(['name' => $request->input('species')]);
+        $sex = Sex::firstOrCreate(['name' => $request->input('sex')]);
+        $size = Size::firstOrCreate(['name' => $request->input('size')]);
+        $age = Age::firstOrCreate(['name' => $request->input('age')]);
+        $temperament = Temperament::firstOrCreate(['name' => $request->input('temperament')]);
+        $livingEnvironment = LivingEnvironment::firstOrCreate(['name' => $request->input('living_environment')]);
+        $socializesWith = SocializesWith::firstOrCreate(['name' => $request->input('socializes_with')]);
+
+        $pet = new Pet();
+
+        $pet->name = $request->input('name');
+        $pet->neutered = $request->input('neutered');
+        $pet->vaccinated = $request->input('vaccinated');
+        $pet->dewormed = $request->input('dewormed');
+        $pet->special_care = $request->input('special_care');
+        $pet->description = $request->input('description');
+        $pet->user_id = $request->user_id;
+
+        $pet->species()->associate($species);
+        $pet->sex()->associate($sex);
+        $pet->size()->associate($size);
+        $pet->age()->associate($age);
+        $pet->temperament()->associate($temperament);
+        $pet->livingEnvironment()->associate($livingEnvironment);
+        $pet->socializesWith()->associate($socializesWith);
+
+        $pet->save();
 
         if ($request->hasFile('images')) {
             $images = [];
@@ -106,8 +111,8 @@ class PetController extends Controller
                 $imageName = time() . '_' . $image->getClientOriginalName();
                 $path = $image->storeAs('pet_images', $imageName, 'public');
                 $images[] = $path;
-                PetImage::create([
-                    'pet_id' => $pet->id,
+                Image::create([
+                    'pet_id' => $pet->pet_id,
                     'image_path' => $path,
                 ]);
             }
