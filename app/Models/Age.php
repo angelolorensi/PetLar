@@ -17,6 +17,6 @@ class Age extends Model
 
     public function pets()
     {
-        return $this->hasMany(Pet::class);
+        return $this->hasMany(Pet::class, 'age_id');
     }
 }

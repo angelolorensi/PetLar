@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sex extends Model
+class Specie extends Model
 {
     protected $fillable = ['name'];
 
     public function pets()
     {
-        return $this->hasMany(Pet::class, 'sex_id');
+        return $this->hasMany(Pet::class, 'specie_id');
     }
 }
