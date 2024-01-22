@@ -162,6 +162,10 @@ class PetController extends Controller
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
+        $pet->temperament()->detach();
+        $pet->livingEnvironment()->detach();
+        $pet->socializesWith()->detach();
+
         $pet->delete();
 
         return response()->json(['message' => 'Pet deleted successfully'], 200);
