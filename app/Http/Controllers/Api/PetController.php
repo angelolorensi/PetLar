@@ -33,7 +33,6 @@ class PetController extends Controller
 
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'ilike', "%$search%")
-                    ->orWhere('living_environment_id', 'ilike', "%$search%")
                     ->orWhereHas('species', function ($q) use ($search) {
                         $q->where('name', 'ilike', "%$search%");
                     })
@@ -44,6 +43,12 @@ class PetController extends Controller
                         $q->where('name', 'ilike', "%$search%");
                     })
                     ->orWhereHas('age', function ($q) use ($search) {
+                        $q->where('name', 'ilike', "%$search%");
+                    })
+                    ->orWhereHas('livingEnvironment', function ($q) use ($search) {
+                        $q->where('name', 'ilike', "%$search%");
+                    })
+                    ->orWhereHas('socializesWith', function ($q) use ($search) {
                         $q->where('name', 'ilike', "%$search%");
                     });
             });
