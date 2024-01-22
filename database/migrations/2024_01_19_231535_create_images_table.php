@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('socializes_with', function (Blueprint $table) {
-            $table->bigIncrements('socializes_with_id');
-            $table->string('name')->unique();
+        Schema::create('images', function (Blueprint $table) {
+            $table->id('image_id');
+            $table->foreignId('pet_id')->constrained('pets','pet_id')->onDelete('cascade');
+            $table->string('image_path');
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('socializes_with');
+        Schema::dropIfExists('pet_images');
     }
 };

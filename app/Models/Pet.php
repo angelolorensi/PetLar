@@ -9,19 +9,15 @@ class Pet extends Model
 {
     use HasFactory;
 
+    protected $table = 'pets';
+    protected $primaryKey = 'pet_id';
+
     protected $fillable = [
         'name',
-        'specie_id',
-        'sex_id',
-        'size_id',
-        'age_id',
         'neutered',
         'vaccinated',
         'dewormed',
         'special_care',
-        'temperament_id',
-        'living_environment_id',
-        'socializes_with_id',
         'description',
     ];
 
@@ -30,44 +26,44 @@ class Pet extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function specie()
+    public function images()
     {
-        return $this->belongsTo(Specie::class, 'specie_id');
+        return $this->hasMany(Image::class, 'pet_id');
+    }
+
+    public function species()
+    {
+        return $this->belongsTo(Species::class, 'species_id', 'specie_id');
     }
 
     public function sex()
     {
-        return $this->belongsTo(Sex::class, 'sex_id');
+        return $this->belongsTo(Sex::class, 'sex_id', 'sex_id');
     }
 
     public function size()
     {
-        return $this->belongsTo(Size::class, 'size_id');
+        return $this->belongsTo(Size::class, 'size_id', 'size_id');
     }
 
     public function age()
     {
-        return $this->belongsTo(Age::class, 'age_id');
+        return $this->belongsTo(Age::class, 'age_id', 'age_id');
     }
 
     public function temperament()
     {
-        return $this->belongsTo(Temperament::class, 'temperament_id');
+        return $this->belongsTo(Temperament::class, 'temperament_id', 'temperament_id');
     }
 
     public function livingEnvironment()
     {
-        return $this->belongsTo(LivingEnvironment::class, 'living_environment_id');
+        return $this->belongsTo(LivingEnvironment::class, 'living_environment_id', 'living_environment_id');
     }
 
     public function socializesWith()
     {
-        return $this->belongsTo(SocializesWith::class, 'socializes_with_id');
-    }
-
-    public function images()
-    {
-        return $this->hasMany(Image::class);
+        return $this->belongsTo(SocializesWith::class, 'socializes_with_id', 'socializes_with_id');
     }
 
     protected static function boot()
@@ -78,6 +74,4 @@ class Pet extends Model
             $pet->images()->delete();
         });
     }
-
 }
-
