@@ -17,6 +17,6 @@ class SocializesWith extends Model
 
     public function pets()
     {
-        return $this->hasMany(Pet::class,'socializes_with_id');
+        return $this->belongsToMany(SocializesWith::class, 'socializes_with_pet', 'pet_id', 'socializes_with_id');
     }
 }

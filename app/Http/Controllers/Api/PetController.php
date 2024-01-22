@@ -25,7 +25,6 @@ class PetController extends Controller
      */
     public function index(Request $request)
     {
-
         $query = Pet::with('images');
 
         if ($request->has('search')) {
@@ -67,6 +66,7 @@ class PetController extends Controller
     }
 
 
+
     /**
      * Display the specified resource.
      */
@@ -104,11 +104,10 @@ class PetController extends Controller
         $pet->sex()->associate($sex);
         $pet->size()->associate($size);
         $pet->age()->associate($age);
-        $pet->temperament()->associate($temperament);
-        $pet->livingEnvironment()->associate($livingEnvironment);
-        $pet->socializesWith()->associate($socializesWith);
-
         $pet->save();
+        $pet->temperament()->attach($temperament->temperament_id);
+        $pet->livingEnvironment()->attach($livingEnvironment->living_environment_id);
+        $pet->socializesWith()->attach($socializesWith->socializes_with_id);
 
         if ($request->hasFile('images')) {
             $images = [];

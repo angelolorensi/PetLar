@@ -17,6 +17,6 @@ class LivingEnvironment extends Model
 
     public function pets()
     {
-        return $this->hasMany(Pet::class, 'living_environment_id');
+        return $this->belongsToMany(LivingEnvironment::class, 'living_environment_pet', 'pet_id', 'living_environment_id');
     }
 }

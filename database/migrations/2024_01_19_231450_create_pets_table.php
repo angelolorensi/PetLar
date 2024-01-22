@@ -23,9 +23,6 @@ return new class extends Migration
             $table->boolean('vaccinated')->default(false);
             $table->boolean('dewormed')->default(false);
             $table->boolean('special_care')->default(false);
-            $table->foreignId('temperament_id')->constrained('temperaments','temperament_id');
-            $table->foreignId('living_environment_id')->constrained('living_environments','living_environment_id');
-            $table->foreignId('socializes_with_id')->constrained('socializes_with','socializes_with_id');
             $table->text('description')->nullable();
             $table->timestamps();
         });

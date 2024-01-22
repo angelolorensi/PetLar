@@ -53,17 +53,17 @@ class Pet extends Model
 
     public function temperament()
     {
-        return $this->belongsTo(Temperament::class, 'temperament_id', 'temperament_id');
+        return $this->belongsToMany(Temperament::class, 'pet_temperament', 'pet_id', 'temperament_id');
     }
 
     public function livingEnvironment()
     {
-        return $this->belongsTo(LivingEnvironment::class, 'living_environment_id', 'living_environment_id');
+        return $this->belongsToMany(LivingEnvironment::class, 'pet_living_environment', 'pet_id', 'living_environment_id');
     }
 
     public function socializesWith()
     {
-        return $this->belongsTo(SocializesWith::class, 'socializes_with_id', 'socializes_with_id');
+        return $this->belongsToMany(SocializesWith::class, 'pet_socializes_with', 'pet_id', 'socializes_with_id');
     }
 
     protected static function boot()

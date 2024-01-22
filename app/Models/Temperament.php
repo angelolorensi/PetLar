@@ -17,6 +17,6 @@ class Temperament extends Model
 
     public function pets()
     {
-        return $this->hasMany(Pet::class);
+        return $this->belongsToMany(Temperament::class, 'temperament_pet', 'pet_id', 'temperament_id');
     }
 }
