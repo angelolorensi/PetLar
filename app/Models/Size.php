@@ -2,14 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Size extends Model
 {
+    use HasFactory;
+
+    protected $table = 'sizes';
+    protected $primaryKey = 'size_id';
+    public $timestamps = false;
+
     protected $fillable = ['name'];
 
     public function pets()
     {
-        return $this->hasMany(Pet::class, 'size_id');
+        return $this->hasMany(Pet::class);
     }
 }
