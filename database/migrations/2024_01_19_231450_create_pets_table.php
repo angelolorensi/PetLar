@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('dewormed')->default(false);
             $table->boolean('special_care')->default(false);
             $table->text('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
