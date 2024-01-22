@@ -13,8 +13,8 @@ class Age extends Model
     protected $primaryKey = 'age_id';
     public $timestamps = false;
 
-    protected $fillable = ['name'];
 
+    protected $fillable = ['name'];
     public function pets()
     {
         return $this->hasMany(Pet::class, 'age_id');
