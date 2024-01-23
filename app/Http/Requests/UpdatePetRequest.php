@@ -15,6 +15,7 @@ class UpdatePetRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'user_id' => 'required',
             'specie' => 'required|string|in:Canino,Felino',
             'sex' => 'required|string|in:Fêmea,Macho',
             'size' => 'required|string|in:Pequeno,Médio,Grande',

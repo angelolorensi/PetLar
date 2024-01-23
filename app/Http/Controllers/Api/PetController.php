@@ -129,10 +129,36 @@ class PetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePetRequest $request, Pet $pet)
+    public function update(Request $request, Pet $pet)
     {
-        $pet->update($request->validated());
         $pet->images()->delete();
+
+        $species = Species::firstOrCreate(['name' => $request->input('species')]);
+        $sex = Sex::firstOrCreate(['name' => $request->input('sex')]);
+        $size = Size::firstOrCreate(['name' => $request->input('size')]);
+        $age = Age::firstOrCreate(['name' => $request->input('age')]);
+        $temperament = Temperament::firstOrCreate(['name' => $request->input('temperament')]);
+        $livingEnvironment = LivingEnvironment::firstOrCreate(['name' => $request->input('living_environment')]);
+        $socializesWith = SocializesWith::firstOrCreate(['name' => $request->input('socializes_with')]);
+
+        $pet->name = $request->input('name');
+        $pet->neutered = $request->input('neutered');
+        $pet->vaccinated = $request->input('vaccinated');
+        $pet->dewormed = $request->input('dewormed');
+        $pet->special_care = $request->input('special_care');
+        $pet->description = $request->input('description');
+        $pet->user_id = $request->user_id;
+
+        $pet->species()->associate($species);
+        $pet->sex()->associate($sex);
+        $pet->size()->associate($size);
+        $pet->age()->associate($age);
+        $pet->save();
+        $pet->temperament()->sync($temperament->temperament_id);
+        $pet->livingEnvironment()->sync($livingEnvironment->living_environment_id);
+        $pet->socializesWith()->sync($socializesWith->socializes_with_id);
+
+        $pet->update();
 
         if ($request->hasFile('images')) {
             $images = [];
@@ -140,15 +166,15 @@ class PetController extends Controller
                 $imageName = time() . '_' . $image->getClientOriginalName();
                 $path = $image->storeAs('pet_images', $imageName, 'public');
                 $images[] = $path;
-                PetImage::create([
-                    'pet_id' => $pet->id,
+               Image::create([
+                    'pet_id' => $pet->pet_id,
                     'image_path' => $path,
                 ]);
             }
             $pet->images = $images;
         }
 
-        $pet = Pet::with('images')->find($pet->id);
+        $pet = Pet::with('images');
 
         return response()->json($pet, 200);
     }
